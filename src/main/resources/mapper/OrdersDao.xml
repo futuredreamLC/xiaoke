@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoke.springboot.dao.OrdersDao">
+
+    <resultMap type="com.xiaoke.springboot.entity.Orders" id="OrdersMap">
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="proName" column="pro_name" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="orderDate" column="order_date" jdbcType="TIMESTAMP"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+        <result property="total" column="total" jdbcType="NUMERIC"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="payDate" column="pay_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrdersMap">
+        select
+          order_id, user_id, pro_name, user_name, order_date, address, quantity, total, status, pay_date
+        from xiaoke.orders
+        where order_id = #{orderId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrdersMap">
+        select
+          order_id, user_id, pro_name, user_name, order_date, address, quantity, total, status, pay_date
+        from xiaoke.orders
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OrdersMap">
+        select
+          order_id, user_id, pro_name, user_name, order_date, address, quantity, total, status, pay_date
+        from xiaoke.orders
+        <where>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="proName != null and proName != ''">
+                and pro_name = #{proName}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="orderDate != null">
+                and order_date = #{orderDate}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="quantity != null">
+                and quantity = #{quantity}
+            </if>
+            <if test="total != null">
+                and total = #{total}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="payDate != null">
+                and pay_date = #{payDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
+        insert into xiaoke.orders(user_id, pro_name, user_name, order_date, address, quantity, total, status, pay_date)
+        values (#{userId}, #{proName}, #{userName}, #{orderDate}, #{address}, #{quantity}, #{total}, #{status}, #{payDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update xiaoke.orders
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="proName != null and proName != ''">
+                pro_name = #{proName},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="orderDate != null">
+                order_date = #{orderDate},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+            <if test="total != null">
+                total = #{total},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="payDate != null">
+                pay_date = #{payDate},
+            </if>
+        </set>
+        where order_id = #{orderId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from xiaoke.orders where order_id = #{orderId}
+    </delete>
+
+</mapper>

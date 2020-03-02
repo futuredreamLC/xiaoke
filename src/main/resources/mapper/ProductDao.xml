@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoke.springboot.dao.ProductDao">
+
+    <resultMap type="com.xiaoke.springboot.entity.Product" id="ProductMap">
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="proName" column="pro_name" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="proImage" column="pro_image" jdbcType="VARCHAR"/>
+        <result property="proDate" column="pro_date" jdbcType="TIMESTAMP"/>
+        <result property="sales" column="sales" jdbcType="INTEGER"/>
+        <result property="stocks" column="stocks" jdbcType="INTEGER"/>
+        <result property="bigclass" column="bigclass" jdbcType="VARCHAR"/>
+        <result property="smallclass" column="smallclass" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProductMap">
+        select
+          pro_id, pro_name, price, pro_image, pro_date, sales, stocks, bigclass, smallclass
+        from xiaoke.product
+        where pro_id = #{proId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductMap">
+        select
+          pro_id, pro_name, price, pro_image, pro_date, sales, stocks, bigclass, smallclass
+        from xiaoke.product
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProductMap">
+        select
+          pro_id, pro_name, price, pro_image, pro_date, sales, stocks, bigclass, smallclass
+        from xiaoke.product
+        <where>
+            <if test="proId != null">
+                and pro_id = #{proId}
+            </if>
+            <if test="proName != null and proName != ''">
+                and pro_name = #{proName}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="proImage != null and proImage != ''">
+                and pro_image = #{proImage}
+            </if>
+            <if test="proDate != null">
+                and pro_date = #{proDate}
+            </if>
+            <if test="sales != null">
+                and sales = #{sales}
+            </if>
+            <if test="stocks != null">
+                and stocks = #{stocks}
+            </if>
+            <if test="bigclass != null and bigclass != ''">
+                and bigclass = #{bigclass}
+            </if>
+            <if test="smallclass != null and smallclass != ''">
+                and smallclass = #{smallclass}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="proId" useGeneratedKeys="true">
+        insert into xiaoke.product(pro_name, price, pro_image, pro_date, sales, stocks, bigclass, smallclass)
+        values (#{proName}, #{price}, #{proImage}, #{proDate}, #{sales}, #{stocks}, #{bigclass}, #{smallclass})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update xiaoke.product
+        <set>
+            <if test="proName != null and proName != ''">
+                pro_name = #{proName},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="proImage != null and proImage != ''">
+                pro_image = #{proImage},
+            </if>
+            <if test="proDate != null">
+                pro_date = #{proDate},
+            </if>
+            <if test="sales != null">
+                sales = #{sales},
+            </if>
+            <if test="stocks != null">
+                stocks = #{stocks},
+            </if>
+            <if test="bigclass != null and bigclass != ''">
+                bigclass = #{bigclass},
+            </if>
+            <if test="smallclass != null and smallclass != ''">
+                smallclass = #{smallclass},
+            </if>
+        </set>
+        where pro_id = #{proId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from xiaoke.product where pro_id = #{proId}
+    </delete>
+
+</mapper>

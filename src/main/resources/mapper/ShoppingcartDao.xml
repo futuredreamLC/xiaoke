@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoke.springboot.dao.ShoppingcartDao">
+
+    <resultMap type="com.xiaoke.springboot.entity.Shoppingcart" id="ShoppingcartMap">
+        <result property="cartId" column="cart_id" jdbcType="INTEGER"/>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+        <result property="total" column="total" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ShoppingcartMap">
+        select
+          cart_id, pro_id, user_id, quantity, total
+        from xiaoke.shoppingcart
+        where cart_id = #{cartId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ShoppingcartMap">
+        select
+          cart_id, pro_id, user_id, quantity, total
+        from xiaoke.shoppingcart
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ShoppingcartMap">
+        select
+          cart_id, pro_id, user_id, quantity, total
+        from xiaoke.shoppingcart
+        <where>
+            <if test="cartId != null">
+                and cart_id = #{cartId}
+            </if>
+            <if test="proId != null">
+                and pro_id = #{proId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="quantity != null">
+                and quantity = #{quantity}
+            </if>
+            <if test="total != null">
+                and total = #{total}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cartId" useGeneratedKeys="true">
+        insert into xiaoke.shoppingcart(pro_id, user_id, quantity, total)
+        values (#{proId}, #{userId}, #{quantity}, #{total})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update xiaoke.shoppingcart
+        <set>
+            <if test="proId != null">
+                pro_id = #{proId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+            <if test="total != null">
+                total = #{total},
+            </if>
+        </set>
+        where cart_id = #{cartId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from xiaoke.shoppingcart where cart_id = #{cartId}
+    </delete>
+
+</mapper>
