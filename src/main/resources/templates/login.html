@@ -27,10 +27,14 @@
     <img class="mb-4" th:src="@{/img/bootstrap-solid.svg}" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
     <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
-    <label for="inputUsername" class="sr-only">用户名</label>
-    <input name="username" type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-    <label for="inputPassword" class="sr-only">密码</label>
-    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <div class="form-label-group">
+        <input type="name" name="username" id="inputName" class="form-control" placeholder="Username" required autofocus>
+        <label for="inputName"></label>
+    </div>
+    <div class="form-label-group">
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputPassword"></label>
+    </div>
     <div class="checkbox mb-3">
         <label>
             <input type="checkbox" value="remember-me"> Remember me

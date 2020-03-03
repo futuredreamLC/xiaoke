@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -40,6 +41,10 @@ public class UserController {
         session.setAttribute("Login",null);
         return "index";
     }
+    @GetMapping("/register")
+    public String register(){
+        return "register";
+    }
     @PostMapping("/login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
@@ -53,6 +58,20 @@ public class UserController {
         else {
             map.put("msg","用户名密码错误！");
             return "login";
+        }
+    }
+    @PostMapping("/register")
+    public String register(User user,
+                           Map<String,Object> map){
+        User user1=userService.queryByName(user.getUserName());
+        if(user1==null)
+        {
+            userService.insert(user);
+        map.put("msg","注册成功，请登录!");
+        return "login";
+        }else{
+            map.put("msg","该用户名已被注册！");
+            return "register";
         }
     }
     @GetMapping("selectOne")

@@ -71,8 +71,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
-        insert into xiaoke.user(user_name, password, sex, address, email, tel, position)
-        values (#{userName}, #{password}, #{sex}, #{address}, #{email}, #{tel}, #{position})
+        insert into xiaoke.user(user_name, password, sex, address, email, tel)
+        values (#{userName}, #{password}, #{sex}, #{address}, #{email}, #{tel})
     </insert>
 
     <!--通过主键修改数据-->
