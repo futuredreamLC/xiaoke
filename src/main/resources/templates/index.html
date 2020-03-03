@@ -100,22 +100,6 @@
                 >注销</a
                 >
             </li>
-            <li class="nav-item dropdown">
-                <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        id="dropdown01"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                >Dropdown</a
-                >
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input
@@ -434,14 +418,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -449,27 +428,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                   加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                            销量</small
                             >
                         </div>
                     </div>
@@ -492,14 +460,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -507,27 +470,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -550,14 +502,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -565,27 +512,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -608,14 +544,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -623,27 +554,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -666,14 +586,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -681,27 +596,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -724,14 +628,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -739,27 +638,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -782,14 +670,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -797,27 +680,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -840,14 +712,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -855,27 +722,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -898,14 +754,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -913,27 +764,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -956,14 +796,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -971,27 +806,16 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
@@ -1014,14 +838,9 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                     <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
                         <p class="card-text">
-                            <font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;"
-                            >这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容。</font
-                            ><font style="vertical-align: inherit;"
-                            >此内容要长一点。</font
-                            ></font
-                            >
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -1029,27 +848,58 @@
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
                                 >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >加入购物车</font
-                                    ></font
-                                    >
+                                    加入购物车
                                 </button>
                                 <button
                                         type="button"
                                         class="btn btn-sm btn-outline-secondary"
-                                >
-                                    <font style="vertical-align: inherit;"
-                                    ><font style="vertical-align: inherit;"
-                                    >立即购买</font
-                                    ></font
-                                    >
+                                >立即购买
                                 </button>
                             </div>
-                            <small class="text-muted"
-                            ><font style="vertical-align: inherit;"
-                            ><font style="vertical-align: inherit;">销量</font></font
-                            ></small
+                            <small class="text-muted">
+                                销量</small
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-3 shadow-sm">
+                    <svg
+                            class="bd-placeholder-img card-img-top"
+                            width="100%"
+                            height="225"
+                            xmlns="http://www.w3.org/2000/svg"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                            role="img"
+                            aria-label="占位符：缩略图"
+                    >
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title" th:if="${session.Login != null}" th:text="${session.Login.getUserName()}">商品名</h5>
+                        <p class="card-text">
+                            这是一种较宽的卡片，带有下面的支持文字，可以自然地引入其他内容
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-secondary"
+                                >
+                                    加入购物车
+                                </button>
+                                <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-secondary"
+                                >立即购买
+                                </button>
+                            </div>
+                            <small class="text-muted">
+                                销量</small
                             >
                         </div>
                     </div>
