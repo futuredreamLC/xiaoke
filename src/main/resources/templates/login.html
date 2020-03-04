@@ -1,6 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
     <link href="/docs/4.4/dist/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet"  >
     <style>
@@ -18,29 +19,33 @@
                 font-size: 3.5rem;
             }
         }
-
     </style>
     <link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
-<body class="text-center">
+<body>
 <form class="form-signin" th:action="@{/user/login}" method="post">
-    <img class="mb-4" th:src="@{/img/bootstrap-solid.svg}" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
-    <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
-    <div class="form-label-group">
-        <input type="name" name="username" id="inputName" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputName"></label>
+    <div class="text-center mb-4">
+        <img class="mb-4" th:src="@{/img/bootstrap-solid.svg}" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+        <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
     </div>
+
+    <div class="form-label-group">
+        <input type="email" name="username" id="inputName" class="form-control" placeholder="UserName" required autofocus>
+        <label for="inputName">Email address</label>
+    </div>
+
     <div class="form-label-group">
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <label for="inputPassword"></label>
+        <label for="inputPassword">Password</label>
     </div>
+
     <div class="checkbox mb-3">
         <label>
             <input type="checkbox" value="remember-me"> Remember me
         </label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <a class="btn btn-lg btn-primary btn-block" th:href="@{/user/register}" methods="get" >注册</a>
 </form>
 </body>
