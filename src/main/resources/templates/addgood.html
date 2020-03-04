@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+    <link
+            href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}"
+            rel="stylesheet"
+    />
+    <style>
+        .container{
+            width: 870px;
+            height: 622px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        body {
+            padding-top: 5rem;
+        }
+        .starter-template {
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+        .form-signin {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px;
+            margin: auto;
+        }
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .form-signin input[type="proname"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="bar::topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="bar::sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <form>
+            <input type="hidden" name="_method" value="put" >
+            <input type="hidden" name="id" >
+            <div class="form-group">
+                <label>商品名</label>
+                <input name="proName" type="text" class="form-control" placeholder="ProName" >
+            </div>
+            <div class="form-group">
+                <label>价格</label>
+                <input name="price" type="price" class="form-control" placeholder="30" >
+            </div>
+            <div class="form-group">
+                <label>库存</label>
+                <input name="price" type="price" class="form-control" placeholder="30" >
+            </div>
+
+
+
+
+        <div class="form-input-group">
+            <label>商品描述</label>
+            <textarea class="form-control" aria-label="With textarea"></textarea>
+        </div>
+        </form>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>

@@ -13,6 +13,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
     //浏览器发送/login请求，来到login 页面
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/user/login").setViewName("login");
+        registry.addViewController("/goods/list").setViewName("goodslist");
+        registry.addViewController("/goods/add").setViewName("addgood");
         registry.addViewController("/user/register").setViewName("register");
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/index.html").setViewName("index");
