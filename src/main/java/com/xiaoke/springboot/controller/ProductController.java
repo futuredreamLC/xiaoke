@@ -11,7 +11,7 @@ import javax.annotation.Resource;
  * (Product)表控制层
  *
  * @author makejava
- * @since 2020-03-02 11:14:17
+ * @since 2020-03-05 16:49:47
  */
 @Controller
 @RequestMapping("product")
@@ -31,6 +31,14 @@ public class ProductController {
     @GetMapping("selectOne")
     public Product selectOne(Integer id) {
         return this.productService.queryById(id);
+    }
+    @GetMapping("list")
+    public String list(){
+        return "goodslist";
+    }
+    @GetMapping("add")
+    public String add(){
+        return "addgood";
     }
 
 }

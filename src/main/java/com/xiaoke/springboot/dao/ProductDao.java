@@ -1,7 +1,6 @@
 package com.xiaoke.springboot.dao;
 
 import com.xiaoke.springboot.entity.Product;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -9,9 +8,8 @@ import java.util.List;
  * (Product)表数据库访问层
  *
  * @author makejava
- * @since 2020-03-02 11:14:15
+ * @since 2020-03-05 16:49:44
  */
-@Mapper
 public interface ProductDao {
 
     /**
