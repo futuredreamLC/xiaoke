@@ -1,6 +1,7 @@
 package com.xiaoke.springboot.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (Type)实体类
@@ -14,7 +15,17 @@ public class Type implements Serializable {
     private Integer typeId;
     
     private Integer parentId;
-    
+
+    private List<Type> childrenTypes;
+
+    public List<Type> getChildrenTypes() {
+        return childrenTypes;
+    }
+
+    public void setChildrenTypes(List<Type> childrenTypes) {
+        this.childrenTypes = childrenTypes;
+    }
+
     private String typename;
 
 
@@ -41,5 +52,6 @@ public class Type implements Serializable {
     public void setTypename(String typename) {
         this.typename = typename;
     }
+
 
 }

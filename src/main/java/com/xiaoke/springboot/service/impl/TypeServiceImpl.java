@@ -6,7 +6,10 @@ import com.xiaoke.springboot.service.TypeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * (Type)表服务实现类
@@ -84,6 +87,15 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public List<Type> queryTypeByPid(Integer parentId){
-        return this.typeDao.queryTypeByPid(parentId);
+        List<Type> parentTypes=typeDao.queryTypeByPid(parentId);
+        Iterator<Type> iterator=parentTypes.iterator();
+        while (iterator.hasNext()){
+            Type it=iterator.next();
+            List<Type> childrenTypes=typeDao.queryTypeByPid(it.getTypeId());
+            Map<Integer,List<Type>> collect =childrenTypes.stream().collect(Collectors.groupingBy(Type::getParentId));
+            List<Type> children=collect.get(it.getTypeId());
+            it.setChildrenTypes(children);
+        }
+        return parentTypes;
     }
 }
