@@ -118,7 +118,7 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" th:href="@{/}">
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -137,16 +137,15 @@
                     首页<span class="sr-only">(current)</span>
                 </a>
             </li>
-            <nav class="nav-item" th:each="t:${types}" >
-                <a class="nav-link" href="#" >
+            <nav class="nav-item" th:each="t:${session.types}">
+                <a class="nav-link" th:href="@{'/goods/list/'+${t.getTypeId()}}" methods="get">
                     <svg class="feather feather-list-ol" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9.5 4.5a1 1 0 00-1-1h-4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-4zm-1 7h-4v4h4v-4zm7 0h-4v4h4v-4zm0-7h-4v4h4v-4zm-7 0h-4v4h4v-4zm2 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4zm-6 6a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-4zm7 0a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-4z"></path>
-
                     </svg>
                     [[${t.typename}]]
                 </a>
                 <nav class="nav nav-pills flex-column" th:each="ct:${t.childrenTypes}">
-                    <a class="nav-link ml-3 my-1" href="#item-1-1"><svg class="feather feather-list-ol" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <a class="nav-link ml-3 my-1"><svg class="feather feather-list-ol" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 11.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"></path>
                     </svg>[[${ct.typename}]]</a>
                 </nav>

@@ -52,4 +52,21 @@ public interface ProductService {
      */
     boolean deleteById(Integer proId);
 
+    /**
+     * 通过商品名查询商品
+     * @param proName
+     * @return
+     */
+    Product queryByName(String proName);
+
+    /**
+     * 查询所有的产品
+     * @return
+     */
+    List<Product> queryAllPro();
+
+    /**
+     * 通过父类查询该父类下所有的产品
+     */
+    List<Product> queryAllProByPid(Integer Pid);
 }

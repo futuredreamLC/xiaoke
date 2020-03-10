@@ -3,6 +3,7 @@
 <mapper namespace="com.xiaoke.springboot.dao.ProductDao">
 
     <resultMap type="com.xiaoke.springboot.entity.Product" id="ProductMap">
+        <id property="proId" column="pro_id"></id>
         <result property="proId" column="pro_id" jdbcType="INTEGER"/>
         <result property="typeId" column="type_id" jdbcType="INTEGER"/>
         <result property="proName" column="pro_name" jdbcType="VARCHAR"/>
@@ -13,6 +14,24 @@
         <result property="stocks" column="stocks" jdbcType="INTEGER"/>
         <result property="proDescribe" column="pro_describe" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap type="com.xiaoke.springboot.entity.Product" id="ProductTypeMap">
+        <id property="proId" column="pro_id"></id>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="typeId" column="type_id" jdbcType="INTEGER"/>
+        <result property="proName" column="pro_name" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="proImage" column="pro_image" jdbcType="VARCHAR"/>
+        <result property="proDate" column="pro_date" jdbcType="TIMESTAMP"/>
+        <result property="sales" column="sales" jdbcType="INTEGER"/>
+        <result property="stocks" column="stocks" jdbcType="INTEGER"/>
+        <result property="proDescribe" column="pro_describe" jdbcType="VARCHAR"/>
+        <association property="type" column="type_id" javaType="com.xiaoke.springboot.entity.Type">
+            <id property="typeId" column="type_id"></id>
+            <result property="typeId" column="type_id"></result>
+            <result property="parentId" column="parent_id"></result>
+            <result property="typename" column="typename"></result>
+        </association>
+    </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="ProductMap">
@@ -21,7 +40,20 @@
         from xiaoke.product
         where pro_id = #{proId}
     </select>
-
+    <!--查询所有的产品和它对应的类别-->
+    <select id="queryAllPro" resultMap="ProductTypeMap">
+        select
+        product.pro_id, product.type_id, product.pro_name, product.price, product.pro_image, product.pro_date, product.sales, product.stocks, product.pro_describe,type.parent_id,type.typename
+        from product,type
+        where product.type_id=type.type_id
+    </select>
+    <!--根据父类id查询所有产品-->
+    <select id="queryAllProByPid" resultMap="ProductTypeMap">
+        select
+        product.pro_id, product.type_id, product.pro_name, product.price, product.pro_image, product.pro_date, product.sales, product.stocks, product.pro_describe,type.parent_id,type.typename
+        from product,type
+        where product.type_id=type.type_id and type.parent_id=#{parentId}
+    </select>
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProductMap">
         select
@@ -65,11 +97,17 @@
             </if>
         </where>
     </select>
+    <select id="queryByName" resultMap="ProductMap">
+        select
+         pro_id, type_id, pro_name, price, pro_image, pro_date, sales, stocks, pro_describe
+         from product
+         where pro_name=#{proName}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="proId" useGeneratedKeys="true">
-        insert into xiaoke.product(type_id, pro_name, price, pro_image, pro_date, sales, stocks, pro_describe)
-        values (#{typeId}, #{proName}, #{price}, #{proImage}, #{proDate}, #{sales}, #{stocks}, #{proDescribe})
+        insert into xiaoke.product(type_id, pro_name, price, pro_image, pro_date, stocks, pro_describe)
+        values (#{typeId}, #{proName}, #{price}, #{proImage}, #{proDate}, #{stocks}, #{proDescribe})
     </insert>
 
     <!--通过主键修改数据-->

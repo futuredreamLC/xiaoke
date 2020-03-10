@@ -60,7 +60,7 @@
                     <label for="inputState">一级目录</label>
                     <select id="inputState" name="parentId" class="form-control">
                         <option th:value="-1">一级类型</option>
-                        <option th:each="t:${types}" th:text="${t.getTypename()}" th:value="${t.getTypeId()}"></option>
+                        <option th:each="t:${session.types}" th:text="${t.getTypename()}" th:value="${t.getTypeId()}"></option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">

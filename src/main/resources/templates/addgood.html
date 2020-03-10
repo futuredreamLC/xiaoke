@@ -19,6 +19,36 @@
     <script src="/bootstrap-fileinput/themes/fa/theme.js"></script>
     <script src="/bootstrap-fileinput/js/locales/zh.js"></script>
     <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
+    <style>
+        .container{
+            width: 870px;
+            height: 622px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        body {
+            padding-top: 5rem;
+        }
+        .starter-template {
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
 <div th:replace="bar::topbar"></div>
@@ -28,6 +58,10 @@
         <!--引入侧边栏-->
         <div th:replace="bar::sidebar"></div>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="alert alert-warning alert-dismissible fade show" th:if="${not #strings.isEmpty(error)}" >
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong th:text="${error}"></strong>
+            </div>
         <form th:action="@{/goods/add}" method="post">
             <div class="form-group col-md-4">
                 <label>商品名</label>
@@ -44,15 +78,15 @@
             <div class="form-group col-md-4">
                 <label for="inputTypeId">商品类别</label>
                 <select class="form-control" id="inputTypeId" name="typeId">
-                    <optgroup th:each="t:${types}" th:label="${t.getTypename()}">
+                    <optgroup th:each="t:${session.types}" th:label="${t.getTypename()}">
                         <option th:each="ct:${t.getChildrenTypes()}" th:value="${ct.getTypeId()}" th:text="${ct.getTypename()}">Mustard</option>
                     </optgroup>
                 </select>
             </div>
             <div class="form-group col-md-4">
-                <label class="col-sm-2 control-label">商品图片</label>
+                <label>商品图片</label>
                 <div class="col-sm-10">
-                    <input type="file" name="myfile" data-ref="proImage" class="col-sm-10 myfile" value="" />
+                    <input type="file" name="myfile" data-ref="proImage" class="form-control myfile" value="" />
                     <input type="hidden" name="proImage" value="">
                 </div>
             </div>

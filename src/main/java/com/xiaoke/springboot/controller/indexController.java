@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
 
 @Controller
 public class indexController {
@@ -18,9 +21,10 @@ public class indexController {
     @Resource
     TypeService typeService;
     @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("types",typeService.queryTypeByPid(-1));
-
+    public String index(HttpSession session){
+        List<Product> products=productService.queryAllPro();
+        session.setAttribute("types",typeService.queryTypeByPid(-1));
+        session.setAttribute("products",products);
         return "index";
     }
 }

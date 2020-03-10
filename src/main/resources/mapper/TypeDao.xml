@@ -16,6 +16,7 @@
         where type_id = #{typeId}
     </select>
 
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TypeMap">
         select

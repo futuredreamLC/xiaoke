@@ -1,12 +1,17 @@
 package com.xiaoke.springboot.service.impl;
 
+import com.xiaoke.springboot.dao.TypeDao;
 import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.dao.ProductDao;
+import com.xiaoke.springboot.entity.Type;
 import com.xiaoke.springboot.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * (Product)表服务实现类
@@ -18,6 +23,9 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Resource
     private ProductDao productDao;
+
+    @Resource
+    private TypeDao typeDao;
 
     /**
      * 通过ID查询单条数据
@@ -75,5 +83,43 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean deleteById(Integer proId) {
         return this.productDao.deleteById(proId) > 0;
+    }
+
+    /**
+     * 通过商品名查询商品
+     * @param proName
+     * @return
+     */
+    @Override
+    public Product queryByName(String proName) {
+        return this.productDao.queryByName(proName);
+    }
+
+    /**
+     * 查询所有的商品
+     * @return
+     */
+    @Override
+    public List<Product> queryAllPro() {
+        List<Product> products=productDao.queryAllPro();
+        Iterator<Product> its=products.iterator();
+        while (its.hasNext()){
+            Product it=its.next();
+            Type ptype=typeDao.queryById(it.getType().getParentId());
+            it.setParentType(ptype);
+        }
+        return products;
+    }
+
+    /**
+     * 通过父类id查询该类下的所有产品
+     * @param Pid
+     * @return
+     */
+    @Override
+    public List<Product> queryAllProByPid(Integer Pid) {
+        List<Product> products=productDao.queryAllProByPid(Pid);
+        System.out.println(1);
+        return null;
     }
 }

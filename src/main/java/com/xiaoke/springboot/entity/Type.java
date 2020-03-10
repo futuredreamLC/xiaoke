@@ -18,6 +18,7 @@ public class Type implements Serializable {
 
     private List<Type> childrenTypes;
 
+
     public List<Type> getChildrenTypes() {
         return childrenTypes;
     }

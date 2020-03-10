@@ -2,6 +2,7 @@ package com.xiaoke.springboot.entity;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (Product)实体类
@@ -30,6 +31,25 @@ public class Product implements Serializable {
     
     private String proDescribe;
 
+    private Type type;
+
+    private Type ParentType;
+
+    public Type getParentType() {
+        return ParentType;
+    }
+
+    public void setParentType(Type parentType) {
+        ParentType = parentType;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public Integer getProId() {
         return proId;
