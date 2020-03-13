@@ -101,8 +101,9 @@
                 >
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0" th:action="@{/goods/search/}" method="post">
             <input
+                    name="keyWord"
                     class="form-control mr-sm-2"
                     type="text"
                     placeholder="Search"
@@ -145,7 +146,7 @@
                     [[${t.typename}]]
                 </a>
                 <nav class="nav nav-pills flex-column" th:each="ct:${t.childrenTypes}">
-                    <a class="nav-link ml-3 my-1"><svg class="feather feather-list-ol" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <a class="nav-link ml-3 my-1" th:href="@{'/goods/children/'+${ct.getTypeId()}}" methods="get"><svg class="feather feather-list-ol" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 11.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"></path>
                     </svg>[[${ct.typename}]]</a>
                 </nav>

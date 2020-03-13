@@ -118,8 +118,28 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<Product> queryAllProByPid(Integer Pid) {
-        List<Product> products=productDao.queryAllProByPid(Pid);
-        System.out.println(1);
-        return null;
+        return this.productDao.queryAllProByPid(Pid);
+
+    }
+
+    /**
+     * 通过子类别查询所有产品
+     * @param typeId
+     * @return
+     */
+    @Override
+    public List<Product> queryByTypeId(Integer typeId) {
+        return this.productDao.queryByTypeId(typeId);
+    }
+
+    /**
+     * 模糊查询
+     * @param text
+     * @return
+     */
+    @Override
+    public List<Product> queryByLike(String keyWord) {
+        return this.productDao.queryByLike(keyWord);
+
     }
 }

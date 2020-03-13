@@ -69,4 +69,12 @@ public interface ProductService {
      * 通过父类查询该父类下所有的产品
      */
     List<Product> queryAllProByPid(Integer Pid);
+    /**
+     * 通过子类别查询所有产品
+     */
+    List<Product> queryByTypeId(Integer typeId);
+    /**
+     * 模糊查询
+     */
+    List<Product> queryByLike(String keyWord);
 }

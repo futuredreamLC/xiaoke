@@ -28,9 +28,6 @@ public class ProductController {
     @Resource
     private ProductService productService;
 
-    @Resource
-    private TypeService typeService;
-
     /**
      * 通过主键查询单条数据
      *
@@ -42,11 +39,33 @@ public class ProductController {
         return this.productService.queryById(id);
     }
 
+    /**
+     * 查询该父类下所有的产品
+     * @param pid
+     * @param session
+     * @return
+     */
     @GetMapping("list/{ParentId}")
     public String list(@PathVariable("ParentId") Integer pid,HttpSession session){
         List<Product> products=productService.queryAllProByPid(pid);
         session.setAttribute("products",products);
-        return null;
+        return "index";
+    }
+    /**
+     * 查询商品
+     */
+    @PostMapping("search")
+    public String list(@RequestParam("keyWord") String keyWord,HttpSession session){
+        session.setAttribute("products",productService.queryByLike(keyWord));
+        return "index";
+    }
+    /**
+     * 查询子类商品
+     */
+    @GetMapping("children/{TypeId}")
+    public String children(@PathVariable("TypeId") Integer typeId,HttpSession session){
+        session.setAttribute("products",productService.queryByTypeId(typeId));
+        return "index";
     }
     /**
      * 跳转到商品列表页面

@@ -40,6 +40,25 @@
         from xiaoke.product
         where pro_id = #{proId}
     </select>
+    <!--根据类别Id查询产品-->
+    <select id="queryByTypeId" resultMap="ProductMap">
+        select
+          pro_id, type_id, pro_name, price, pro_image, pro_date, sales, stocks, pro_describe
+        from product
+        where type_id=#{typeId}
+    </select>
+    <!--模糊查询产品-->
+    <select id="queryByLike" resultMap="ProductMap">
+        select
+        pro_id, type_id, pro_name, price, pro_image, pro_date, sales, stocks, pro_describe
+        from product
+        where 1=1
+          <if test="keyWord !=null and keyWord !=''">
+             and CONCAT(pro_id) like CONCAT('%',#{keyWord},'%')
+             or CONCAT(pro_name) like CONCAT('%',#{keyWord},'%')
+             or CONCAT(pro_describe) like CONCAT('%',#{keyWord},'%')
+          </if>
+    </select>
     <!--查询所有的产品和它对应的类别-->
     <select id="queryAllPro" resultMap="ProductTypeMap">
         select
