@@ -4,6 +4,7 @@ import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.service.ProductService;
 import com.xiaoke.springboot.service.TypeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -52,7 +53,7 @@ public class ProductController {
         return "index";
     }
     /**
-     * 查询商品
+     * 模糊查询商品
      */
     @PostMapping("search")
     public String list(@RequestParam("keyWord") String keyWord,HttpSession session){
@@ -101,11 +102,48 @@ public class ProductController {
             product.setProDate(new Date());
             productService.insert(product);
             map.put("success","商品添加成功!");
-            return "goodslist";
+            return "redirect:/goods/list";
         }else {
             map.put("error","该商品已存在!");
             return "addgood";
         }
+    }
+
+    /**
+     * 根据ProId删除产品
+     * @return
+     */
+    @PostMapping("delete/{ProId}")
+    public String delete(@PathVariable("ProId") Integer ProId,Map<String,Object> map){
+        productService.deleteById(ProId);
+        map.put("success","删除成功");
+        return "goodslist";
+    }
+
+    /**
+     * 跳转到修改商品信息页面
+     * @param ProId
+     * @param model
+     * @return
+     */
+    @GetMapping("updata/{ProId}")
+    public String updata(@PathVariable("ProId") Integer ProId, Model model){
+        Product product=productService.queryById(ProId);
+        model.addAttribute("product",product);
+        return "goodupdata";
+    }
+
+    /**
+     * 修改商品信息
+     * @param product
+     * @param map
+     * @return
+     */
+    @PostMapping("updata")
+    public String updata(Product product,Map<String,Object> map){
+            productService.update(product);
+            map.put("success","修改成功");
+            return "redirect:/goods/list";
     }
 
 }

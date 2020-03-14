@@ -34,11 +34,11 @@
     </resultMap>
 
     <!--查询单个-->
-    <select id="queryById" resultMap="ProductMap">
+    <select id="queryById" resultMap="ProductTypeMap">
         select
-          pro_id, type_id, pro_name, price, pro_image, pro_date, sales, stocks, pro_describe
-        from xiaoke.product
-        where pro_id = #{proId}
+        product.pro_id, product.type_id, product.pro_name, product.price, product.pro_image, product.pro_date, product.sales, product.stocks, product.pro_describe,type.parent_id,type.typename
+        from product,type
+        where product.type_id=type.type_id and product.pro_id=#{proId}
     </select>
     <!--根据类别Id查询产品-->
     <select id="queryByTypeId" resultMap="ProductMap">
@@ -50,13 +50,15 @@
     <!--模糊查询产品-->
     <select id="queryByLike" resultMap="ProductMap">
         select
-        pro_id, type_id, pro_name, price, pro_image, pro_date, sales, stocks, pro_describe
+        product.pro_id, product.type_id, product.pro_name, product.price, product.pro_image, product.pro_date, product.sales, product.stocks, product.pro_describe,type.typename
         from product
-        where 1=1
+        left join type on product.type_id=type.type_id
+        where 1=1 and type.type_id=product.type_id
           <if test="keyWord !=null and keyWord !=''">
-             and CONCAT(pro_id) like CONCAT('%',#{keyWord},'%')
-             or CONCAT(pro_name) like CONCAT('%',#{keyWord},'%')
-             or CONCAT(pro_describe) like CONCAT('%',#{keyWord},'%')
+             and CONCAT(product.pro_id) like CONCAT('%',#{keyWord},'%')
+             or CONCAT(product.pro_name) like CONCAT('%',#{keyWord},'%')
+             or CONCAT(product.pro_describe) like CONCAT('%',#{keyWord},'%')
+             or CONCAT(type.typename) like CONCAT('%',#{keyWord},'%')
           </if>
     </select>
     <!--查询所有的产品和它对应的类别-->

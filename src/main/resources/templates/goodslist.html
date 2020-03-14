@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>商品管理</title>
+
     <link
             href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
             th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}"
@@ -39,7 +40,9 @@
         }
     </style>
     <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
-
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div th:replace="bar::topbar"></div>
@@ -80,19 +83,25 @@
                         <td th:text="${p.getParentType().getTypename()}"></td>
                         <td th:text="${p.getType().getTypename()}">8</td>
                         <td>
-                            <a class="btn btn-sm btn-primary" >编辑</a>
-                            <button  class="btn btn-sm btn-danger deleteBtn">删除</button>
+                            <a class="btn btn-sm btn-primary" th:href="@{'/goods/updata/'+${p.getProId()}}" methods="get" >编辑</a>
+                            <button th:attr="del_uri=@{'/goods/delete/'+${p.getProId()}}" class="btn btn-sm btn-danger deleteBtn">删除</button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </main>
-        <form id="deleteEmpForm"  method="post">
-            <input type="hidden" name="_method" value="delete">
+        <form id="deleteEmpForm"  method="post" >
+            <input type="hidden" name="_method" value="post"/>
         </form>
     </div>
 </div>
+<script>
+        $(".deleteBtn").click(function () {
+            $("#deleteEmpForm").attr("action", $(this).attr("del_uri")).submit();
+            return false;
+        });
 
+</script>
 </body>
 </html>

@@ -35,7 +35,10 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product queryById(Integer proId) {
-        return this.productDao.queryById(proId);
+        Product product=productDao.queryById(proId);
+        Type type=typeDao.queryById(product.getType().getParentId());
+        product.setParentType(type);
+        return product;
     }
 
     /**
@@ -134,7 +137,7 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 模糊查询
-     * @param text
+     * @param
      * @return
      */
     @Override
