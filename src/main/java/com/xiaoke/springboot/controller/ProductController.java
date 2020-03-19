@@ -1,6 +1,10 @@
 package com.xiaoke.springboot.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xiaoke.springboot.entity.Comment;
 import com.xiaoke.springboot.entity.Product;
+import com.xiaoke.springboot.service.CommentService;
 import com.xiaoke.springboot.service.ProductService;
 import com.xiaoke.springboot.service.TypeService;
 import org.springframework.stereotype.Controller;
@@ -29,15 +33,21 @@ public class ProductController {
     @Resource
     private ProductService productService;
 
+    @Resource
+    private CommentService commentService;
+
     /**
-     * 通过主键查询单条数据
+     * 通过proId查询商品详情，并查询出该商品的所有评论
      *
-     * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
-    public Product selectOne(Integer id) {
-        return this.productService.queryById(id);
+    @GetMapping("details/{ProId}")
+    public String details(@PathVariable("ProId") Integer ProId,HttpSession session) {
+        List<Comment> comments=commentService.queryByProId(ProId);
+        Product product=productService.queryById(ProId);
+        session.setAttribute("product",product);
+        session.setAttribute("comments",comments);
+        return "gooddetails";
     }
 
     /**
@@ -56,16 +66,20 @@ public class ProductController {
      * 模糊查询商品
      */
     @PostMapping("search")
-    public String list(@RequestParam("keyWord") String keyWord,HttpSession session){
-        session.setAttribute("products",productService.queryByLike(keyWord));
+    public String list(@RequestParam("keyWord") String keyWord,
+                       HttpSession session){
+        List<Product> products=productService.queryByLike(keyWord);
+        session.setAttribute("products",products);
         return "index";
     }
     /**
      * 查询子类商品
      */
     @GetMapping("children/{TypeId}")
-    public String children(@PathVariable("TypeId") Integer typeId,HttpSession session){
-        session.setAttribute("products",productService.queryByTypeId(typeId));
+    public String children(@PathVariable("TypeId") Integer typeId,
+                           HttpSession session){
+        List<Product> products=productService.queryByTypeId(typeId);
+        session.setAttribute("products",products);
         return "index";
     }
     /**
@@ -74,9 +88,10 @@ public class ProductController {
      * @return
      */
     @GetMapping("list")
-    public String list(HttpSession session){
-        List<Product> products=productService.queryAllPro();
-        session.setAttribute("goods",products);
+    public String tolist(@RequestParam(defaultValue = "1") Integer pageNum,HttpSession session){
+        PageHelper.startPage(pageNum,12);
+        PageInfo pageInfo=new PageInfo(productService.queryAllPro());
+        session.setAttribute("pageInfo",pageInfo);
         return "goodslist";
     }
 
@@ -144,6 +159,14 @@ public class ProductController {
             productService.update(product);
             map.put("success","修改成功");
             return "redirect:/goods/list";
+    }
+    @GetMapping("page")
+    public String page(@RequestParam(defaultValue = "1") Integer pageNum,
+                       HttpSession session){
+        PageHelper.startPage(pageNum,12);
+        PageInfo pageInfo=new PageInfo(productService.queryAllPro());
+        session.setAttribute("pageInfo",pageInfo);
+        return "goodslist";
     }
 
 }

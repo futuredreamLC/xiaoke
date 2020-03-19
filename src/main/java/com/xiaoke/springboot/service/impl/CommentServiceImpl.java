@@ -76,4 +76,14 @@ public class CommentServiceImpl implements CommentService {
     public boolean deleteById(Integer commentId) {
         return this.commentDao.deleteById(commentId) > 0;
     }
+
+    /**
+     * 通过产品id查询该产品的所有评论
+     * @param proId
+     * @return
+     */
+    @Override
+    public List<Comment> queryByProId(Integer proId) {
+        return null;
+    }
 }

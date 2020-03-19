@@ -73,7 +73,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="p:${session.goods}" >
+                    <tr th:each="p:${session.pageInfo.list}" >
                         <td th:text="${p.getProId()}"></td>
                         <td th:text="${p.getProName()}"></td>
                         <td th:text="${p.getPrice()}+'￥'"></td>
@@ -90,15 +90,27 @@
                     </tbody>
                 </table>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" th:href="@{/goods/list}" >首页</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" th:href="@{/goods/page/(pageNum=1)}">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" th:href="@{/goods/page/(pageNum=2)}">2</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" th:href="@{/goods/page/(pageNum=${session.pageInfo.getNextPage()})}">下一页</a>
+                    </li>
+                </ul>
+            </nav>
         </main>
-        <form id="deleteEmpForm"  method="post" >
+        <form id="deleteGoodForm"  method="post" >
             <input type="hidden" name="_method" value="post"/>
         </form>
     </div>
 </div>
 <script>
         $(".deleteBtn").click(function () {
-            $("#deleteEmpForm").attr("action", $(this).attr("del_uri")).submit();
+            $("#deleteGoodForm").attr("action", $(this).attr("del_uri")).submit();
             return false;
         });
 

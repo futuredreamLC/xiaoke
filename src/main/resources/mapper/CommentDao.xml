@@ -9,6 +9,19 @@
         <result property="comment" column="comment" jdbcType="VARCHAR"/>
         <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap type="com.xiaoke.springboot.entity.Comment" id="CommentUserMap">
+        <id property="commentId" column="comment_id"></id>
+        <result property="commentId" column="comment_id" jdbcType="INTEGER"/>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
+        <association property="user" column="user_id" javaType="com.xiaoke.springboot.entity.User">
+            <id property="userId" column="user_id"></id>
+            <result property="userId" column="user_id"></result>
+            <result property="userName" column="user_name"></result>
+        </association>
+    </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="CommentMap">
@@ -48,6 +61,13 @@
                 and comment_time = #{commentTime}
             </if>
         </where>
+    </select>
+
+    <!--通过产品id查询该产品下的所有评论-->
+    <select id="queryByProId" resultMap="CommentUserMap">
+        select comment.comment_id,comment.pro_id,comment.user_id,comment.comment,comment.comment_time,user.user_name
+        from comment,user
+        where comment.user_id=user.user_id and comment.pro_id=#{proId}
     </select>
 
     <!--新增所有列-->

@@ -52,4 +52,11 @@ public interface CommentService {
      */
     boolean deleteById(Integer commentId);
 
+    /**
+     * 通过产品id查询该产品的所有评论
+     * @param proId
+     * @return
+     */
+    List<Comment> queryByProId(Integer proId);
+
 }
