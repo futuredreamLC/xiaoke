@@ -139,6 +139,7 @@
 </script>
 <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.bundle.min.js"></script>
 <script>
+    //计算全部的方法
     function getSumCost(){
         let allCost = 0.0;
         let allQuantity=0;
@@ -158,6 +159,7 @@
 
 
     $(function () {
+        //点击+按钮，改变对应的数值
         $("[id^=add-]").click(function () {
             let id=this.id.split('-')[1];
             let quantity=$("#quantity-"+id).val();
@@ -170,6 +172,7 @@
             getSumCost()
         })
 
+        //点击-按钮，改变对应的数值
         $("[id^=cut-]").click(function () {
             let id=this.id.split('-')[1];
             let price=parseFloat($("#price-"+id).text());
@@ -184,6 +187,7 @@
             getSumCost()
         })
 
+        //点击全选复选框，选择全部商品，并计算总价
         $("#checkAll").click(function () {
             let checked=this.checked;
             $("[id^=check-]").each(function () {
@@ -192,7 +196,7 @@
             getSumCost();
         })
 
-
+        //手动改变数量框中的数据，改变相应的值
         $("[id^=quantity-]").change(function () {
             let id=this.id.split('-')[1];
             let quantity=$("#quantity-"+id).val();
@@ -202,6 +206,7 @@
             getSumCost();
         })
 
+        //选中某件商品，并改变总价
         $("[id^=check-]").click(function () {
             let id=this.id.split('-')[1];
             let quantity=parseFloat($("#allQuantity").text());
