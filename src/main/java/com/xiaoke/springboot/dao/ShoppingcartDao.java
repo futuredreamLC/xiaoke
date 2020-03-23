@@ -62,4 +62,17 @@ public interface ShoppingcartDao {
      */
     int deleteById(Integer cartId);
 
+    /**
+     * 通过用户id查询该用户购物车中的所有产品
+     * @param userId
+     * @return
+     */
+    List<Shoppingcart> queryByUid(Integer userId);
+
+    /**
+     * 通过产品id查询购物车中是否有此产品
+     * @param proId
+     * @return
+     */
+    Shoppingcart queryByProId(Integer proId);
 }

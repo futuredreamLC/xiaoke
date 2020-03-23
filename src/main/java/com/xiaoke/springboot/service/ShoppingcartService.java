@@ -52,4 +52,17 @@ public interface ShoppingcartService {
      */
     boolean deleteById(Integer cartId);
 
+    /**
+     * 通过用户id查询出用户购物车中所有的商品
+     * @param Uid
+     * @return
+     */
+    List<Shoppingcart> queryByUid(Integer Uid);
+
+    /**
+     * 通过产品id查询购物车中是否有这个产品
+     * @param proId
+     * @return
+     */
+    Shoppingcart queryByProId(Integer proId);
 }

@@ -21,6 +21,15 @@ public class Shoppingcart implements Serializable {
     
     private Double total;
 
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public Integer getCartId() {
         return cartId;

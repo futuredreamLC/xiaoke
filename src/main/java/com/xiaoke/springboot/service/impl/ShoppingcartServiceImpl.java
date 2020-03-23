@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Service("shoppingcartService")
 public class ShoppingcartServiceImpl implements ShoppingcartService {
+
     @Resource
     private ShoppingcartDao shoppingcartDao;
 
@@ -34,7 +35,7 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
@@ -75,5 +76,20 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
     @Override
     public boolean deleteById(Integer cartId) {
         return this.shoppingcartDao.deleteById(cartId) > 0;
+    }
+
+    /**
+     * 通过用户的id查询出用户购物车中所有的商品
+     * @param Uid
+     * @return
+     */
+    @Override
+    public List<Shoppingcart> queryByUid(Integer userId) {
+        return this.shoppingcartDao.queryByUid(userId);
+    }
+
+    @Override
+    public Shoppingcart queryByProId(Integer proId) {
+        return this.shoppingcartDao.queryByProId(proId);
     }
 }

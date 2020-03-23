@@ -84,6 +84,6 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public List<Comment> queryByProId(Integer proId) {
-        return null;
+        return this.commentDao.queryByProId(proId);
     }
 }

@@ -1,95 +1,230 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>购物车</title>
+
     <link
-            th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}"
+            href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}"
             rel="stylesheet"
     />
-    <link th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" rel="stylesheet"  />
-    <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
-    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/bootstrap-fileinput/js/plugins/piexif.min.js" type="text/javascript"></script>
-    <script src="/bootstrap-fileinput/js/plugins/sortable.min.js" type="text/javascript"></script>
-    <script src="/bootstrap-fileinput/js/plugins/purify.min.js" type="text/javascript"></script>
-    <script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js"></script>
-    <script src="/bootstrap-fileinput/js/fileinput.min.js"></script>
-    <script src="/bootstrap-fileinput/themes/fa/theme.js"></script>
-    <script src="/bootstrap-fileinput/js/locales/zh.js"></script>
+    <style>
+        .container {
+            width: auto;
+            max-width: 680px;
+            padding: 0 15px;
+        }
 
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <span class="oi oi-plus"></span>
+        .footer {
+            background-color: #f5f5f5;
+        }
+
+        code {
+            font-size: 80%;
+        }
+        body {
+            padding-top: 5rem;
+        }
+        .starter-template {
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
 </head>
 <body>
-<svg src="/img/7d15501d-c699-48fa-811c-e3d32841ec76.jpg">
-</svg>
-    <div class="form-group">
-    <label class="col-sm-2 control-label">菜谱封面</label>
-    <div class="col-sm-10">
-        <input type="file" name="myfile" data-ref="url2" class="col-sm-10 myfile" value="" />
-        <input type="hidden" name="url2" value="">
+<div th:replace="bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="bar::sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0">
+
+                    </div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0">
+                    </div>
+                </div>
+            </div>
+            <div class="row bg-light">
+                <h2 style="color: red;">全部商品 <span th:if="${session.carts.size()!=0}" th:text="${session.carts.size()}"></span></h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>商品图片</th>
+                            <th>商品名</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>小计</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="c:${session.carts}">
+                            <td>
+                                <div>
+                                <input th:id="'check-'+${c.getCartId()}" type="checkbox" style="zoom: 200%;vertical-align:text-top; margin-top:25px;">
+                                </div>
+                            </td>
+                            <td>
+                                <img src="/img/41be264b-eba8-4198-953c-64d8a1c4fa0c.png" th:src="'/img/'+${c.getProduct().getProImage()}" style="width: 100px;height: 120px" />
+                            </td>
+                            <td>
+                                <div style="width: 200px" th:text="${c.getProduct().getProDescribe()}">这是一台以前的iPhone6</div>
+                            </td>
+                            <td>
+                                <div>￥<span th:id="'price-'+${c.getCartId()}" th:text="${c.getProduct().getPrice()}">300</span></div>
+                            </td>
+                            <td>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-outline-secondary" type="button" th:id="'cut-'+${c.getCartId()}" id="cut">-</button>
+                                    </div>
+                                    <input type="text" th:id="'quantity-'+${c.getCartId()}"  th:value="${c.getQuantity()}" class="col-md-2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" th:id="'add-'+${c.getCartId()}" id="add">+</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-weight: bold">￥<span th:id="'total-'+${c.getCartId()}" th:text="${c.getTotal()}">300</span></div>
+                            </td>
+                            <td>
+                                <button href="#" class="btn btn-lg btn-danger deleteBtn" >删除</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div th:if="${session.carts.size()==0}">
+                <p>您还没有添加任何商品进入你的购物车，快去商城选你的心仪的宝贝吧！</p>
+            </div>
+        </main>
+        <div style="width: 97%;padding-left: 268px;height: 60px;display: inline">
+            <div style="height: 60px;width: 20%;float: left"><input id="checkAll" style="zoom: 200%;" type="checkbox">全选</div>
+            <div style="height: 60px;width: 20%;float: left">已选中<span id="allQuantity" style="color: red;font-weight: bold" >0</span>件商品</div>
+            <div style="height: 60px;width: 20%;float: left"><a href="#">删除已选中的商品</a></div>
+            <div style="height: 60px;width: 20%;float: left;font-weight: bold">总价:￥<span th:id="allCost" style="color: red">0</span></div>
+            <div style="height: 60px;width: 20%;float: left"><button id="toPay" style="float: right" class="btn btn-lg btn-danger deleteBtn" >结算</button></div>
+        </div>
     </div>
 </div>
-
+<script src="/webjars/jquery/3.4.1/jquery.js"></script>
+<script src="/js/bootstrap-input-spinner.js"></script>
 <script>
-    $(".myfile").fileinput({
-        //上传的地址
-        uploadUrl:"/file/uploadFile",
-        uploadAsync : true, //默认异步上传
-        showUpload : true, //是否显示上传按钮,跟随文本框的那个
-        showRemove : true, //显示移除按钮,跟随文本框的那个
-        showCaption : true,//是否显示标题,就是那个文本框
-        showPreview : true, //是否显示预览,不写默认为true
-        dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
-        //minImageWidth: 50, //图片的最小宽度
-        //minImageHeight: 50,//图片的最小高度
-        //maxImageWidth: 1000,//图片的最大宽度
-        //maxImageHeight: 1000,//图片的最大高度
-        //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-        //minFileCount: 0,
-        maxFileCount : 1, //表示允许同时上传的最大文件个数
-        enctype : 'multipart/form-data',
-        validateInitialCount : true,
-        previewFileIcon : "<i class='glyphicon glyphicon-king'></i>",
-        msgFilesTooMany : "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        allowedFileTypes : [ 'image' ],//配置允许文件上传的类型
-        allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
-        allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ],//控制被预览的所有mime类型
-        language : 'zh'
-    })
-    //异步上传返回结果处理
-    $('.myfile').on('fileerror', function(event, data, msg) {
-        console.log("fileerror");
-        console.log(data);
-    });
-    //异步上传返回结果处理
-    $(".myfile").on("fileuploaded", function(event, data, previewId, index) {
-        console.log("fileuploaded");
-        var ref = $(this).attr("data-ref");
-        $("input[name='" + ref + "']").val(data.response.url);
-
-    });
-
-    //同步上传错误处理
-    $('.myfile').on('filebatchuploaderror', function(event, data, msg) {
-        console.log("filebatchuploaderror");
-        console.log(data);
-    });
-
-    //同步上传返回结果处理
-    $(".myfile").on("filebatchuploadsuccess",
-        function(event, data, previewId, index) {
-            console.log("filebatchuploadsuccess");
-            console.log(data);
-        });
-
-    //上传前
-    $('.myfile').on('filepreupload', function(event, data, previewId, index) {
-        console.log("filepreupload");
-    });
-
+    window.jQuery ||
+    document.write(
+        '<script src="/webjars/jquery/3.4.1/jquery.slim.min.js"><\/script>'
+    );
 </script>
+<script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.bundle.min.js"></script>
+<script>
+    function getSumCost(){
+        let allCost = 0.0;
+        let allQuantity=0;
+        $("[id^=check-]").each(function () {
+            if (this.checked){//如果当前被选中
+                let id=this.id.split('-')[1];
+                let quantity=$("#quantity-"+id).val();
+                let price=parseFloat($("#price-"+id).text());
+                allCost += price * quantity;
+                allQuantity++;
+            }
+        });
+        $("#allQuantity").text(allQuantity);
+        $("#allCost").text(allCost.toFixed(1));
+        return allCost.toFixed(1);
+    }
 
+
+    $(function () {
+        $("[id^=add-]").click(function () {
+            let id=this.id.split('-')[1];
+            let quantity=$("#quantity-"+id).val();
+            let price=parseFloat($("#price-"+id).text());
+            let total=0.0;
+            quantity++;
+            total=quantity*price;
+            $("#total-"+id).text(total.toFixed(1));
+            $("#quantity-"+id).val(quantity);
+            getSumCost()
+        })
+
+        $("[id^=cut-]").click(function () {
+            let id=this.id.split('-')[1];
+            let price=parseFloat($("#price-"+id).text());
+            let total=0.0;
+            let quantity=$("#quantity-"+id).val();
+            if (quantity>1){
+                quantity--;
+            }
+            total=quantity*price;
+            $("#total-"+id).text(total.toFixed(1));
+            $("#quantity-"+id).val(quantity);
+            getSumCost()
+        })
+
+        $("#checkAll").click(function () {
+            let checked=this.checked;
+            $("[id^=check-]").each(function () {
+                this.checked = checked;
+            })
+            getSumCost();
+        })
+
+
+        $("[id^=quantity-]").change(function () {
+            let id=this.id.split('-')[1];
+            let quantity=$("#quantity-"+id).val();
+            let price=parseFloat($("#price-"+id).text());
+            let total=price*quantity;
+            $("#total-"+id).text(total.toFixed(1));
+            getSumCost();
+        })
+
+        $("[id^=check-]").click(function () {
+            let id=this.id.split('-')[1];
+            let quantity=parseFloat($("#allQuantity").text());
+            let allCost=parseFloat($("#allCost").text());
+            let total=parseFloat($("#total-"+id).text());
+            if (this.checked){
+                allCost = allCost + total;
+                quantity++;
+                $("#allQuantity").text(quantity);
+                $("#allCost").text(allCost.toFixed(1));
+            } else {
+                allCost = allCost-total;
+                quantity--;
+                $("#allQuantity").text(quantity);
+                $("#allCost").text(allCost.toFixed(1));
+            }
+        })
+
+        $("#toPay").click(function () {
+            alert("触发了");
+        })
+
+    })
+</script>
 </body>
 </html>
