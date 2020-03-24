@@ -1,5 +1,7 @@
 package com.xiaoke.springboot.controller;
 
+
+import com.alibaba.fastjson.JSON;
 import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.entity.Shoppingcart;
 import com.xiaoke.springboot.entity.User;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.net.HttpCookie;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +79,6 @@ public class ShoppingcartController {
                 map.put("msg", "商品已加入购物车，请回我的购物车界面查看");
                 return "index";
             } else {
-                Integer oldQuantity=shoppingcart1.getQuantity();
                 Integer newQuantity=shoppingcart1.getQuantity()+shoppingcart.getQuantity();
                 Integer cartId=shoppingcart1.getCartId();
                 Double newTotal=product.getPrice() * newQuantity;
@@ -94,4 +95,33 @@ public class ShoppingcartController {
         }
     }
 
+    /**
+     * 根据购物车id删除购物车中的某一个商品
+     * @param cartId 购物车Id
+     * @param map
+     * @return
+     */
+    @PostMapping("delete/{cartId}")
+    public String deleteOne(@PathVariable("cartId") Integer cartId,Map<String,Object> map){
+        shoppingcartService.deleteById(cartId);
+        map.put("msg","该商品已移除你的购物车");
+        return "redirect:/shoppingcart/myshopcart";
+    }
+
+    @PostMapping("deleteSomeCart")
+    public String deleteSome(String deleteInfo,Map<String,Object> map){
+        List<Shoppingcart> list=JSON.parseArray(deleteInfo,Shoppingcart.class);
+        if (list.size()!=0) {
+            Iterator<Shoppingcart> its = list.iterator();
+            while (its.hasNext()) {
+                Shoppingcart it = its.next();
+                int cartId = it.getCartId();
+                shoppingcartService.deleteById(cartId);
+            }
+            return "redirect:/shoppingcart/myshopcart";
+        }else {
+            map.put("msg","请先选择你要删除的商品");
+            return "myshopcart";
+        }
+    }
 }

@@ -140,7 +140,7 @@ public class ProductController {
     public String delete(@PathVariable("ProId") Integer ProId, Map<String, Object> map) {
         productService.deleteById(ProId);
         map.put("success", "删除成功");
-        return "goodslist";
+        return "redirect:/goods/list";
     }
 
     /**
