@@ -1,12 +1,16 @@
 package com.xiaoke.springboot.service.impl;
 
+import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.entity.Shoppingcart;
 import com.xiaoke.springboot.dao.ShoppingcartDao;
+import com.xiaoke.springboot.entity.User;
 import com.xiaoke.springboot.service.ShoppingcartService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Shoppingcart)表服务实现类
@@ -19,6 +23,16 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
 
     @Resource
     private ShoppingcartDao shoppingcartDao;
+
+    @Resource
+    private ShoppingcartService shoppingcartService;
+
+    @Resource
+    HttpSession session;
+
+
+    @Resource
+    Map<String,Object> map;
 
     /**
      * 通过ID查询单条数据
@@ -51,8 +65,26 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
      */
     @Override
     public Shoppingcart insert(Shoppingcart shoppingcart) {
-        this.shoppingcartDao.insert(shoppingcart);
-        return shoppingcart;
+        User user = (User) session.getAttribute("Login");
+        Product product = (Product) session.getAttribute("product");
+        Shoppingcart shoppingcart1 = shoppingcartService.queryByProId(product.getProId(),user.getUserId());
+        if (shoppingcart1 == null) {
+            Integer uid = user.getUserId();
+            Double total = product.getPrice() * shoppingcart.getQuantity();
+            shoppingcart.setUserId(uid);
+            shoppingcart.setTotal(total);
+            this.shoppingcartDao.insert(shoppingcart);
+            return shoppingcart;
+        } else {
+            Integer newQuantity = shoppingcart1.getQuantity() + shoppingcart.getQuantity();
+            Integer cartId = shoppingcart1.getCartId();
+            Double newTotal = product.getPrice() * newQuantity;
+            shoppingcart.setQuantity(newQuantity);
+            shoppingcart.setTotal(newTotal);
+            shoppingcart.setCartId(cartId);
+            this.shoppingcartDao.update(shoppingcart);
+            return shoppingcart;
+        }
     }
 
     /**
@@ -88,8 +120,14 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
         return this.shoppingcartDao.queryByUid(userId);
     }
 
+    /**
+     * 根据用户的id和产品的id查询该用户下的购物车中是否已经有了该产品
+     * @param proId
+     * @param userId
+     * @return
+     */
     @Override
-    public Shoppingcart queryByProId(Integer proId) {
-        return this.shoppingcartDao.queryByProId(proId);
+    public Shoppingcart queryByProId(Integer proId,Integer userId) {
+        return this.shoppingcartDao.queryByProId(proId,userId);
     }
 }

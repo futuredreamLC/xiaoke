@@ -74,5 +74,5 @@ public interface ShoppingcartDao {
      * @param proId
      * @return
      */
-    Shoppingcart queryByProId(Integer proId);
+    Shoppingcart queryByProId(@Param("proId") Integer proId,@Param("userId") Integer userId);
 }

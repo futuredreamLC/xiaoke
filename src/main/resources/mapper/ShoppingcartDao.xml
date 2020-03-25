@@ -78,7 +78,7 @@
     <select id="queryByProId" resultType="com.xiaoke.springboot.entity.Shoppingcart">
         select cart_id, pro_id, user_id, quantity, total
         from shoppingcart
-        where pro_id=#{proId}
+        where pro_id=#{proId} and user_id=#{userId}
     </select>
 
     <!--新增所有列-->

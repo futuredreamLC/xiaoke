@@ -69,24 +69,13 @@ public class ShoppingcartController {
         User user = (User) session.getAttribute("Login");
         Product product = (Product) session.getAttribute("product");
         if (user != null) {
-            Shoppingcart shoppingcart1=shoppingcartService.queryByProId(product.getProId());
+            shoppingcartService.insert(shoppingcart);
+            Shoppingcart shoppingcart1 = shoppingcartService.queryByProId(product.getProId(),user.getUserId());
             if (shoppingcart1==null) {
-                Integer uid = user.getUserId();
-                Double total = product.getPrice() * shoppingcart.getQuantity();
-                shoppingcart.setUserId(uid);
-                shoppingcart.setTotal(total);
-                shoppingcartService.insert(shoppingcart);
-                map.put("msg", "商品已加入购物车，请回我的购物车界面查看");
+                map.put("msg","该商品已加入您的购物车，请回购物车查看");
                 return "index";
-            } else {
-                Integer newQuantity=shoppingcart1.getQuantity()+shoppingcart.getQuantity();
-                Integer cartId=shoppingcart1.getCartId();
-                Double newTotal=product.getPrice() * newQuantity;
-                shoppingcart.setQuantity(newQuantity);
-                shoppingcart.setTotal(newTotal);
-                shoppingcart.setCartId(cartId);
-                shoppingcartService.update(shoppingcart);
-                map.put("msg","商品已存在，已将购物车中该商品进行数量叠加，请回购物车查看");
+            }else {
+                map.put("msg","您的购物车中已有该商品，已对数量进行叠加，请前往购物车查看");
                 return "index";
             }
         } else {
@@ -108,11 +97,17 @@ public class ShoppingcartController {
         return "redirect:/shoppingcart/myshopcart";
     }
 
+    /**
+     * 接收购物批量删除的信息，然后进行批量删除
+     * @param deleteInfo
+     * @param map
+     * @return
+     */
     @PostMapping("deleteSomeCart")
     public String deleteSome(String deleteInfo,Map<String,Object> map){
-        List<Shoppingcart> list=JSON.parseArray(deleteInfo,Shoppingcart.class);
+        List<Shoppingcart> list=JSON.parseArray(deleteInfo,Shoppingcart.class);//将前端返回的json字符串，转义成对象列表
         if (list.size()!=0) {
-            Iterator<Shoppingcart> its = list.iterator();
+            Iterator<Shoppingcart> its = list.iterator();//迭代器迭代列表中的元素
             while (its.hasNext()) {
                 Shoppingcart it = its.next();
                 int cartId = it.getCartId();
