@@ -1,17 +1,22 @@
 package com.xiaoke.springboot.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xiaoke.springboot.entity.Orders;
+import com.xiaoke.springboot.entity.Shoppingcart;
 import com.xiaoke.springboot.service.OrdersService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * (Orders)表控制层
  *
  * @author makejava
- * @since 2020-03-02 11:13:37
+ * @since 2020-03-27 10:57:44
  */
 @Controller
 @RequestMapping("orders")
@@ -29,8 +34,26 @@ public class OrdersController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Orders selectOne(Integer id) {
+    public Orders selectOne(String id) {
         return this.ordersService.queryById(id);
+    }
+
+    /**
+     * 根据购物车提交的信息，跳转到确认订单页面
+     * @param ordersInfo
+     * @param model
+     * @return
+     */
+    @PostMapping("addOrders")
+    public String addOrders(String ordersInfo, Model model, Map<String,Object> map){
+        List<Shoppingcart> list= JSON.parseArray(ordersInfo,Shoppingcart.class);
+        if (list.size()!=0) {
+            model.addAttribute("carts", list);
+            return "addOrders";
+        }else {
+            map.put("msg","请先选择您要购买的商品");
+            return "myshopcart";
+        }
     }
 
 }

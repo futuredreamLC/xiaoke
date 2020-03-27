@@ -90,7 +90,7 @@
                                 </div>
                             </td>
                             <td>
-                                <img src="/img/41be264b-eba8-4198-953c-64d8a1c4fa0c.png" th:src="'/img/'+${c.getProduct().getProImage()}" style="width: 100px;height: 120px" />
+                                <img th:src="'/img/'+${c.getProduct().getProImage()}" style="width: 100px;height: 120px" />
                             </td>
                             <td>
                                 <div style="width: 200px" th:text="${c.getProduct().getProDescribe()}">这是一台以前的iPhone6</div>
@@ -129,6 +129,9 @@
             <form th:action="@{/shoppingcart/deleteSomeCart}" id="deleteSomeCart" method="post">
                 <input type="hidden" name="deleteInfo" id="deleteInfo"/>
             </form>
+            <form th:action="@{/orders/addOrders}" id="orders" method="post">
+                <input type="hidden" name="ordersInfo" id="ordersInfo"/>
+            </form>
         </main>
         <div style="width: 97%;padding-left: 268px;height: 60px;display: inline" th:if="${session.carts.size()!=0}">
             <div style="height: 60px;width: 20%;float: left"><input id="checkAll" style="zoom: 200%;" type="checkbox">全选</div>
@@ -140,7 +143,6 @@
     </div>
 </div>
 <script src="/webjars/jquery/3.4.1/jquery.js"></script>
-<script src="/js/bootstrap-input-spinner.js"></script>
 <script>
     window.jQuery ||
     document.write(
@@ -256,7 +258,8 @@
                     arr.push(cart);
                 }
             });
-            console.log(arr);
+            $("#ordersInfo").val(JSON.stringify(arr));
+            $("#orders").submit();
         });
 
         //删除某一个商品
@@ -282,10 +285,8 @@
                     arr.push(cart);
                 }
             })
-            console.log(arr);
             $("#deleteInfo").val(JSON.stringify(arr));
             $("#deleteSomeCart").submit();
-
         })
 
     })

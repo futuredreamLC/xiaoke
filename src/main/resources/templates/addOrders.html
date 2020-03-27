@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>确认订单</title>
+
+    <link
+            href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}"
+            rel="stylesheet"
+    />
+    <style>
+        .container {
+            width: auto;
+            max-width: 680px;
+            padding: 0 15px;
+        }
+
+        .footer {
+            background-color: #f5f5f5;
+        }
+
+        code {
+            font-size: 80%;
+        }
+        body {
+            padding-top: 5rem;
+        }
+        .starter-template {
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="bar::sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0">
+
+                    </div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0">
+                    </div>
+                </div>
+            </div>
+            <div class="row bg-light">
+                <div>
+                    <label>收获地址</label>
+                    <input name="address" th:value="${session.Login.getAddress()}"/>
+                </div>
+                <div th:each="c:${carts}" style="display: inline">
+                    <div style="float: left"><img th:src="'/img/'+${c.product.getProImage()}"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="/webjars/jquery/3.4.1/jquery.js"></script>
+<script>
+    window.jQuery ||
+    document.write(
+        '<script src="/webjars/jquery/3.4.1/jquery.slim.min.js"><\/script>'
+    );
+</script>
+<script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

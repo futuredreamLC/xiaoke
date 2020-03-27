@@ -1,24 +1,24 @@
 package com.xiaoke.springboot.dao;
 
-import com.xiaoke.springboot.entity.Orders;
+import com.xiaoke.springboot.entity.OrdersInfo;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * (Orders)表数据库访问层
+ * (OrdersInfo)表数据库访问层
  *
  * @author makejava
- * @since 2020-03-27 10:57:42
+ * @since 2020-03-27 10:58:45
  */
-public interface OrdersDao {
+public interface OrdersInfoDao {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param orderId 主键
+     * @param orderInfoId 主键
      * @return 实例对象
      */
-    Orders queryById(String orderId);
+    OrdersInfo queryById(Integer orderInfoId);
 
     /**
      * 查询指定行数据
@@ -27,39 +27,39 @@ public interface OrdersDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Orders> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<OrdersInfo> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param orders 实例对象
+     * @param ordersInfo 实例对象
      * @return 对象列表
      */
-    List<Orders> queryAll(Orders orders);
+    List<OrdersInfo> queryAll(OrdersInfo ordersInfo);
 
     /**
      * 新增数据
      *
-     * @param orders 实例对象
+     * @param ordersInfo 实例对象
      * @return 影响行数
      */
-    int insert(Orders orders);
+    int insert(OrdersInfo ordersInfo);
 
     /**
      * 修改数据
      *
-     * @param orders 实例对象
+     * @param ordersInfo 实例对象
      * @return 影响行数
      */
-    int update(Orders orders);
+    int update(OrdersInfo ordersInfo);
 
     /**
      * 通过主键删除数据
      *
-     * @param orderId 主键
+     * @param orderInfoId 主键
      * @return 影响行数
      */
-    int deleteById(String orderId);
+    int deleteById(Integer orderInfoId);
 
 }

@@ -1,23 +1,23 @@
 package com.xiaoke.springboot.service;
 
-import com.xiaoke.springboot.entity.Orders;
+import com.xiaoke.springboot.entity.OrdersInfo;
 import java.util.List;
 
 /**
- * (Orders)表服务接口
+ * (OrdersInfo)表服务接口
  *
  * @author makejava
- * @since 2020-03-27 10:57:43
+ * @since 2020-03-27 10:58:45
  */
-public interface OrdersService {
+public interface OrdersInfoService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param orderId 主键
+     * @param orderInfoId 主键
      * @return 实例对象
      */
-    Orders queryById(String orderId);
+    OrdersInfo queryById(Integer orderInfoId);
 
     /**
      * 查询多条数据
@@ -26,30 +26,30 @@ public interface OrdersService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Orders> queryAllByLimit(int offset, int limit);
+    List<OrdersInfo> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param orders 实例对象
+     * @param ordersInfo 实例对象
      * @return 实例对象
      */
-    Orders insert(Orders orders);
+    OrdersInfo insert(OrdersInfo ordersInfo);
 
     /**
      * 修改数据
      *
-     * @param orders 实例对象
+     * @param ordersInfo 实例对象
      * @return 实例对象
      */
-    Orders update(Orders orders);
+    OrdersInfo update(OrdersInfo ordersInfo);
 
     /**
      * 通过主键删除数据
      *
-     * @param orderId 主键
+     * @param orderInfoId 主键
      * @return 是否成功
      */
-    boolean deleteById(String orderId);
+    boolean deleteById(Integer orderInfoId);
 
 }

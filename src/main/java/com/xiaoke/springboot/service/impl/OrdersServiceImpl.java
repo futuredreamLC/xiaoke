@@ -12,7 +12,7 @@ import java.util.List;
  * (Orders)表服务实现类
  *
  * @author makejava
- * @since 2020-03-02 11:13:36
+ * @since 2020-03-27 10:57:43
  */
 @Service("ordersService")
 public class OrdersServiceImpl implements OrdersService {
@@ -26,7 +26,7 @@ public class OrdersServiceImpl implements OrdersService {
      * @return 实例对象
      */
     @Override
-    public Orders queryById(Integer orderId) {
+    public Orders queryById(String orderId) {
         return this.ordersDao.queryById(orderId);
     }
 
@@ -73,7 +73,7 @@ public class OrdersServiceImpl implements OrdersService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer orderId) {
+    public boolean deleteById(String orderId) {
         return this.ordersDao.deleteById(orderId) > 0;
     }
 }
