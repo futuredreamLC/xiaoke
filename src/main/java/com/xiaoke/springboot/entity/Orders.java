@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (Orders)实体类
  *
  * @author makejava
- * @since 2020-03-27 10:57:39
+ * @since 2020-03-27 12:26:04
  */
 public class Orders implements Serializable {
-    private static final long serialVersionUID = -99841984220912832L;
+    private static final long serialVersionUID = 637666959264226540L;
     
     private String orderId;
     
@@ -18,15 +18,17 @@ public class Orders implements Serializable {
     
     private String userName;
     
+    private String userTel;
+    
     private Date orderDate;
+    
+    private Date payDate;
     
     private String address;
     
     private Double total;
     
     private String status;
-    
-    private Date payDate;
 
 
     public String getOrderId() {
@@ -53,12 +55,28 @@ public class Orders implements Serializable {
         this.userName = userName;
     }
 
+    public String getUserTel() {
+        return userTel;
+    }
+
+    public void setUserTel(String userTel) {
+        this.userTel = userTel;
+    }
+
     public Date getOrderDate() {
         return orderDate;
     }
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public Date getPayDate() {
+        return payDate;
+    }
+
+    public void setPayDate(Date payDate) {
+        this.payDate = payDate;
     }
 
     public String getAddress() {
@@ -83,14 +101,6 @@ public class Orders implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Date getPayDate() {
-        return payDate;
-    }
-
-    public void setPayDate(Date payDate) {
-        this.payDate = payDate;
     }
 
 }

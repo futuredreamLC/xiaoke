@@ -64,13 +64,12 @@
                 </div>
             </div>
             <div class="row bg-light">
-                <div>
-                    <label>收获地址</label>
-                    <input name="address" th:value="${session.Login.getAddress()}"/>
-                </div>
-                <div th:each="c:${carts}" style="display: inline">
-                    <div style="float: left"><img th:src="'/img/'+${c.product.getProImage()}"></div>
-                </div>
+                <form>
+                    <div class="form-group col-md-4">
+                        <label>收货地址</label>
+                        <input name="address" type="text" class="form-control" th:value="${session.Login.getAddress()}" >
+                    </div>
+                </form>
             </div>
         </main>
     </div>
