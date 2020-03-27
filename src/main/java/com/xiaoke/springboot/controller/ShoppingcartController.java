@@ -69,8 +69,8 @@ public class ShoppingcartController {
         User user = (User) session.getAttribute("Login");
         Product product = (Product) session.getAttribute("product");
         if (user != null) {
-            shoppingcartService.insert(shoppingcart);
             Shoppingcart shoppingcart1 = shoppingcartService.queryByProId(product.getProId(),user.getUserId());
+            shoppingcartService.insert(shoppingcart);
             if (shoppingcart1==null) {
                 map.put("msg","该商品已加入您的购物车，请回购物车查看");
                 return "index";

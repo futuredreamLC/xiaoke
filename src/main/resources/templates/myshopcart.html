@@ -131,6 +131,7 @@
             </form>
             <form th:action="@{/orders/addOrders}" id="orders" method="post">
                 <input type="hidden" name="ordersInfo" id="ordersInfo"/>
+                <input type="hidden" name="cost" id="cost"/>
             </form>
         </main>
         <div style="width: 97%;padding-left: 268px;height: 60px;display: inline" th:if="${session.carts.size()!=0}">
@@ -259,6 +260,7 @@
                 }
             });
             $("#ordersInfo").val(JSON.stringify(arr));
+            $("#cost").val(getSumCost());
             $("#orders").submit();
         });
 

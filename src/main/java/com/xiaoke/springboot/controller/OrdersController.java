@@ -46,10 +46,11 @@ public class OrdersController {
      * @return
      */
     @PostMapping("addOrders")
-    public String addOrders(String ordersInfo, Model model, Map<String,Object> map){
+    public String addOrders(String ordersInfo,Double cost, Model model, Map<String,Object> map){
         List<Shoppingcart> list= JSON.parseArray(ordersInfo,Shoppingcart.class);
         if (list.size()!=0) {
             model.addAttribute("carts", list);
+            model.addAttribute("cost",cost);
             return "addOrders";
         }else {
             map.put("msg","请先选择您要购买的商品");
