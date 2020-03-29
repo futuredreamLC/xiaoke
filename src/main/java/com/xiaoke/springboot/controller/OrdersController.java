@@ -51,11 +51,19 @@ public class OrdersController {
         if (list.size()!=0) {
             model.addAttribute("carts", list);
             model.addAttribute("cost",cost);
+            model.addAttribute("orderInfo",ordersInfo);
             return "addOrders";
         }else {
             map.put("msg","请先选择您要购买的商品");
             return "myshopcart";
         }
+    }
+
+    @PostMapping("add")
+    public String add(Orders orders,String orderInfo){
+        List<Shoppingcart> list= JSON.parseArray(orderInfo,Shoppingcart.class);
+        ordersService.insert(orders,list);
+        return "index";
     }
 
 }

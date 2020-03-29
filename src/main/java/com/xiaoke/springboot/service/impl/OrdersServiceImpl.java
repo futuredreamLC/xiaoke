@@ -1,11 +1,20 @@
 package com.xiaoke.springboot.service.impl;
 
+import com.xiaoke.springboot.dao.OrdersInfoDao;
+import com.xiaoke.springboot.dao.ShoppingcartDao;
 import com.xiaoke.springboot.entity.Orders;
 import com.xiaoke.springboot.dao.OrdersDao;
+import com.xiaoke.springboot.entity.OrdersInfo;
+import com.xiaoke.springboot.entity.Shoppingcart;
+import com.xiaoke.springboot.service.OrdersInfoService;
 import com.xiaoke.springboot.service.OrdersService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,6 +27,14 @@ import java.util.List;
 public class OrdersServiceImpl implements OrdersService {
     @Resource
     private OrdersDao ordersDao;
+
+
+    @Resource
+    private OrdersInfoDao ordersInfoDao;
+
+    @Resource
+    private ShoppingcartDao shoppingcartDao;
+
 
     /**
      * 通过ID查询单条数据
@@ -46,10 +63,31 @@ public class OrdersServiceImpl implements OrdersService {
      * 新增数据
      *
      * @param orders 实例对象
+     * @param list
      * @return 实例对象
      */
     @Override
-    public Orders insert(Orders orders) {
+    public Orders insert(Orders orders, List<Shoppingcart> list) {
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHMM");
+        String date=dateFormat.format(System.currentTimeMillis());
+        int r=(int) Math.random()*100;
+        String ordersId=date+r;
+        orders.setOrderId(ordersId);
+        orders.setOrderDate(new Date());
+        orders.setStatus("待支付");
+        Iterator<Shoppingcart> its=list.iterator();
+        while (its.hasNext()){
+            Shoppingcart it=its.next();
+            OrdersInfo ordersInfo=new OrdersInfo();
+            ordersInfo.setImg(it.getProduct().getProImage());
+            ordersInfo.setOrderId(ordersId);
+            ordersInfo.setPrice(it.getProduct().getPrice());
+            ordersInfo.setProId(it.getProId());
+            ordersInfo.setQuantity(it.getQuantity());
+            ordersInfo.setProName(it.getProduct().getProName());
+            ordersInfoDao.insert(ordersInfo);
+            shoppingcartDao.deleteById(it.getCartId());
+        }
         this.ordersDao.insert(orders);
         return orders;
     }

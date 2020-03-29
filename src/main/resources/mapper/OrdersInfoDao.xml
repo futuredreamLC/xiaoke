@@ -9,12 +9,13 @@
         <result property="price" column="price" jdbcType="NUMERIC"/>
         <result property="quantity" column="quantity" jdbcType="INTEGER"/>
         <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="proName" column="pro_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="OrdersInfoMap">
         select
-          order_info_id, order_id, pro_id, price, quantity, img
+          order_info_id, order_id, pro_id, price, quantity, img, pro_name
         from xiaoke.orders_info
         where order_info_id = #{orderInfoId}
     </select>
@@ -22,7 +23,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="OrdersInfoMap">
         select
-          order_info_id, order_id, pro_id, price, quantity, img
+          order_info_id, order_id, pro_id, price, quantity, img, pro_name
         from xiaoke.orders_info
         limit #{offset}, #{limit}
     </select>
@@ -30,7 +31,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="OrdersInfoMap">
         select
-          order_info_id, order_id, pro_id, price, quantity, img
+          order_info_id, order_id, pro_id, price, quantity, img, pro_name
         from xiaoke.orders_info
         <where>
             <if test="orderInfoId != null">
@@ -51,13 +52,16 @@
             <if test="img != null and img != ''">
                 and img = #{img}
             </if>
+            <if test="proName != null and proName != ''">
+                and pro_name = #{proName}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderInfoId" useGeneratedKeys="true">
-        insert into xiaoke.orders_info(order_id, pro_id, price, quantity, img)
-        values (#{orderId}, #{proId}, #{price}, #{quantity}, #{img})
+        insert into xiaoke.orders_info(order_id, pro_id, price, quantity, img, pro_name)
+        values (#{orderId}, #{proId}, #{price}, #{quantity}, #{img}, #{proName})
     </insert>
 
     <!--通过主键修改数据-->
@@ -78,6 +82,9 @@
             </if>
             <if test="img != null and img != ''">
                 img = #{img},
+            </if>
+            <if test="proName != null and proName != ''">
+                pro_name = #{proName},
             </if>
         </set>
         where order_info_id = #{orderInfoId}

@@ -8,7 +8,7 @@ import java.util.List;
  * (OrdersInfo)表数据库访问层
  *
  * @author makejava
- * @since 2020-03-27 10:58:45
+ * @since 2020-03-28 16:01:02
  */
 public interface OrdersInfoDao {
 

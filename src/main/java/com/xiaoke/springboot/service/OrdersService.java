@@ -1,6 +1,8 @@
 package com.xiaoke.springboot.service;
 
 import com.xiaoke.springboot.entity.Orders;
+import com.xiaoke.springboot.entity.Shoppingcart;
+
 import java.util.List;
 
 /**
@@ -32,9 +34,10 @@ public interface OrdersService {
      * 新增数据
      *
      * @param orders 实例对象
+     * @param list
      * @return 实例对象
      */
-    Orders insert(Orders orders);
+    Orders insert(Orders orders, List<Shoppingcart> list);
 
     /**
      * 修改数据

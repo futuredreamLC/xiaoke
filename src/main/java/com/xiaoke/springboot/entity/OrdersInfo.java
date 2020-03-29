@@ -6,10 +6,10 @@ import java.io.Serializable;
  * (OrdersInfo)实体类
  *
  * @author makejava
- * @since 2020-03-27 10:58:45
+ * @since 2020-03-28 16:01:01
  */
 public class OrdersInfo implements Serializable {
-    private static final long serialVersionUID = 243303187979197086L;
+    private static final long serialVersionUID = -32489011767394612L;
     
     private Integer orderInfoId;
     
@@ -22,6 +22,8 @@ public class OrdersInfo implements Serializable {
     private Integer quantity;
     
     private String img;
+    
+    private String proName;
 
 
     public Integer getOrderInfoId() {
@@ -70,6 +72,14 @@ public class OrdersInfo implements Serializable {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getProName() {
+        return proName;
+    }
+
+    public void setProName(String proName) {
+        this.proName = proName;
     }
 
 }
