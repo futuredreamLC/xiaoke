@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>所有订单</title>
+
+    <link
+            href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}"
+            rel="stylesheet"
+    />
+    <style>
+        .container{
+            width: 870px;
+            height: 622px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        body {
+            padding-top: 5rem;
+        }
+        .starter-template {
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="bar::sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <table style="padding-top: 50px" class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>订单编号</th>
+                    <th>用户名</th>
+                    <th>商品信息</th>
+                    <th>价格</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${orders.size()!=0}" th:each="ord:${orders}" >
+                    <td><span th:text="${ord.getOrderId()}" style="font-weight: bold"></span></td>
+                    <td><span th:text="${ord.getUserName()}"></span></td>
+                    <td>
+                        <div style="overflow: auto;width: 400px;height: 100px">
+                            <div style="display:inline-block" th:each="ordInfo:${ord.getOrdersInfos()}">
+                                <div style="float: left;width: 80px"><span th:text="${ordInfo.getProName()}"></span>
+                                </div>
+                                <div style="float: left;width: 100px">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp￥<span style="font-weight: bold;color: red;width: 100px" th:text="${ordInfo.getPrice()}"></span>
+                                </div>
+                                <div style="float: left;width: 100px">&nbsp&nbsp&nbsp&nbsp×<span style="font-weight: bold;width: 100px" th:text="${ordInfo.getQuantity()}"></span>
+                                </div>
+                                <div style="float: left;width: 100px">&nbsp&nbsp&nbsp&nbsp&nbsp￥<span style="font-weight: bold;color: red;width: 100px" th:text="${ordInfo.getPrice()*ordInfo.getQuantity()}"></span></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        ￥<span style="font-weight: bold;color: red" th:id="'cost-'+${ord.getOrderId()}" th:text="${ord.getTotal()}"></span>
+                    </td>
+                    <td>
+                        <button th:if="${ord.getStatus()=='待发货'}" th:id="'payBtn-'+${ord.getOrderId()}" class="btn btn-sm btn-primary payBtn" th:text="${ord.getStatus()}"></button>
+                        <span th:if="${ord.getStatus()!='待发货'}" th:text="${ord.getStatus()}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${orders.size()==0}">
+                <h2>还没有用户下单哦~~~~~</h2>
+            </div>
+        </main>
+        <form id="payForm" th:action="@{/orders/update}" method="post">
+            <input type="hidden" name="operateId" id="operateId"/>
+            <input type="hidden" name="ordersId" id="ordersId"/>
+        </form>
+        <div id="paymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">确认发货</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="text"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" id="pay" class="btn btn-primary">确认发货</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/webjars/jquery/3.4.1/jquery.js"></script>
+<script>
+    window.jQuery ||
+    document.write(
+        '<script src="/webjars/jquery/3.4.1/jquery.slim.min.js"><\/script>'
+    );
+</script>
+<script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    $("[id^=payBtn-]").click(function () {
+        let id=this.id.split('-')[1];
+        let cost=parseFloat($("#cost-"+id).text());
+        $("#text").text("总价："+cost.toFixed(1)+"￥");
+        $("#paymodal").modal('show');
+        $("#pay").click(function () {
+            $("#operateId").val(2);
+            $("#ordersId").val(id);
+            $("#payForm").submit();
+        })
+    })
+</script>
+</body>
+</html>

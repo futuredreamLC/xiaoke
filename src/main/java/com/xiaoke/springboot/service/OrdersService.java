@@ -45,7 +45,7 @@ public interface OrdersService {
      * @param orders 实例对象
      * @return 实例对象
      */
-    Orders update(Orders orders);
+    Orders update(Orders orders,Integer operateId);
 
     /**
      * 通过主键删除数据
@@ -55,4 +55,25 @@ public interface OrdersService {
      */
     boolean deleteById(String orderId);
 
+
+    /**
+     * 通过用户Id查询该用户所有的订单
+     * @param userId
+     * @return
+     */
+    List<Orders> queryByUserId(Integer userId);
+
+    /**
+     * 查询所有的订单消息
+     * @return
+     */
+    List<Orders> queryAllOrd();
+
+    /**
+     * 通过条件查询该用户不同的订单信息
+     * @param userId
+     * @param operateId
+     * @return
+     */
+    List<Orders> querySomeOrd(Integer userId, Integer operateId);
 }

@@ -62,4 +62,24 @@ public interface OrdersDao {
      */
     int deleteById(String orderId);
 
+    /**
+     * 通过userId查询该用户下的所有订单
+     * @param userId
+     * @return
+     */
+    List<Orders> queryByUserId(Integer userId);
+
+    /**
+     * 查询所有的订单信息
+     * @return
+     */
+    List<Orders> queryAllOrd();
+
+    /**
+     * 根据条件查询不同状态的订单信息
+     * @param userId
+     * @param status
+     * @return
+     */
+    List<Orders> querySomeOrd(@Param("userId") Integer userId, @Param("status") String status);
 }

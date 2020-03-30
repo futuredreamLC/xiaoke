@@ -57,6 +57,11 @@
             </if>
         </where>
     </select>
+    <select id="queryByOrdersId" resultMap="OrdersInfoMap">
+        select order_info_id,order_id,pro_id,price,quantity,img,pro_name
+        from orders_info
+        where order_id=#{ordersId}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderInfoId" useGeneratedKeys="true">

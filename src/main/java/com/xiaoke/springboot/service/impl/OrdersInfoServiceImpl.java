@@ -76,4 +76,16 @@ public class OrdersInfoServiceImpl implements OrdersInfoService {
     public boolean deleteById(Integer orderInfoId) {
         return this.ordersInfoDao.deleteById(orderInfoId) > 0;
     }
+
+    /**
+     * 通过订单id查询订单详情信息
+     * @param ordersId
+     * @return
+     */
+    @Override
+    public List<OrdersInfo> queryByOrdersId(String ordersId) {
+        return this.ordersInfoDao.queryByOrdersId(ordersId);
+    }
+
+
 }

@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * (Orders)表服务实现类
@@ -68,7 +70,7 @@ public class OrdersServiceImpl implements OrdersService {
      */
     @Override
     public Orders insert(Orders orders, List<Shoppingcart> list) {
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHMM");
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHMMSS");
         String date=dateFormat.format(System.currentTimeMillis());
         int r=(int) Math.random()*100;
         String ordersId=date+r;
@@ -99,7 +101,16 @@ public class OrdersServiceImpl implements OrdersService {
      * @return 实例对象
      */
     @Override
-    public Orders update(Orders orders) {
+    public Orders update(Orders orders,Integer operateId) {
+        if (operateId==1){
+            orders.setStatus("待发货");
+        }
+        if (operateId==2){
+            orders.setStatus("待收货");
+        }
+        if (operateId==3){
+            orders.setStatus("待评价");
+        }
         this.ordersDao.update(orders);
         return this.queryById(orders.getOrderId());
     }
@@ -114,4 +125,77 @@ public class OrdersServiceImpl implements OrdersService {
     public boolean deleteById(String orderId) {
         return this.ordersDao.deleteById(orderId) > 0;
     }
+
+
+    /**
+     * 通过用户Id查询该用户所有的订单
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Orders> queryByUserId(Integer userId) {
+        List<Orders> orders=ordersDao.queryByUserId(userId);
+        Iterator<Orders> its=orders.iterator();
+        while (its.hasNext()){
+            Orders it=its.next();
+            List<OrdersInfo> ordersInfos=ordersInfoDao.queryByOrdersId(it.getOrderId());
+            Map<String,List<OrdersInfo>> collect=ordersInfos.stream().collect(Collectors.groupingBy(OrdersInfo::getOrderId));
+            List<OrdersInfo> list=collect.get(it.getOrderId());
+            it.setOrdersInfos(list);
+        }
+        return orders;
+    }
+
+    /**
+     * 拆查询所有的订单信息
+     * @return
+     */
+    @Override
+    public List<Orders> queryAllOrd() {
+        List<Orders> orders=ordersDao.queryAllOrd();
+        Iterator<Orders> ords=orders.iterator();
+        while (ords.hasNext()){
+            Orders it=ords.next();
+            List<OrdersInfo> ordersInfos=ordersInfoDao.queryByOrdersId(it.getOrderId());
+            Map<String,List<OrdersInfo>> collect=ordersInfos.stream().collect(Collectors.groupingBy(OrdersInfo::getOrderId));
+            List<OrdersInfo> list=collect.get(it.getOrderId());
+            it.setOrdersInfos(list);
+        }
+        return orders;
+    }
+
+    /**
+     * 通过条件查询用户不同状态订单的信息
+     * @param userId
+     * @param operateId
+     * @return
+     */
+    @Override
+    public List<Orders> querySomeOrd(Integer userId, Integer operateId) {
+        String status=null;
+        if (operateId==1){
+            status="待支付";
+        }
+        if (operateId==2){
+            status="待发货";
+        }
+        if (operateId==3){
+            status="待收货";
+        }
+        if (operateId==4){
+            status="待评价";
+        }
+        List<Orders> orders=ordersDao.querySomeOrd(userId,status);
+        Iterator<Orders> its=orders.iterator();
+        while (its.hasNext()){
+            Orders it=its.next();
+            List<OrdersInfo> ordersInfos=ordersInfoDao.queryByOrdersId(it.getOrderId());
+            Map<String,List<OrdersInfo>> collect=ordersInfos.stream().collect(Collectors.groupingBy(OrdersInfo::getOrderId));
+            List<OrdersInfo> list=collect.get(it.getOrderId());
+            it.setOrdersInfos(list);
+        }
+        return orders;
+    }
+
+
 }

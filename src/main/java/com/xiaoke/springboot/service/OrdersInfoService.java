@@ -52,4 +52,11 @@ public interface OrdersInfoService {
      */
     boolean deleteById(Integer orderInfoId);
 
+    /**
+     * 通过订单id查询订单详情
+     * @param ordersId
+     * @return
+     */
+    List<OrdersInfo> queryByOrdersId(String ordersId);
+
 }

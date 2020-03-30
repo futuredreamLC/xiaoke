@@ -2,6 +2,7 @@ package com.xiaoke.springboot.entity;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (Orders)实体类
@@ -30,6 +31,16 @@ public class Orders implements Serializable {
     
     private String status;
 
+    private List<OrdersInfo> ordersInfos;
+
+
+    public List<OrdersInfo> getOrdersInfos() {
+        return ordersInfos;
+    }
+
+    public void setOrdersInfos(List<OrdersInfo> ordersInfos) {
+        this.ordersInfos = ordersInfos;
+    }
 
     public String getOrderId() {
         return orderId;

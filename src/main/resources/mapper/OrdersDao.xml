@@ -14,6 +14,28 @@
         <result property="status" column="status" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap type="com.xiaoke.springboot.entity.Orders" id="OrdersUserMap">
+        <id property="orderId" column="order_id"></id>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userTel" column="user_tel" jdbcType="VARCHAR"/>
+        <result property="orderDate" column="order_date" jdbcType="TIMESTAMP"/>
+        <result property="payDate" column="pay_date" jdbcType="TIMESTAMP"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="total" column="total" jdbcType="NUMERIC"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <association property="ordersInfos" column="order_info_id" javaType="com.xiaoke.springboot.entity.OrdersInfo">
+            <id property="orderInfoId" column="order_info_id"></id>
+            <result property="orderId" column="order_id"></result>
+            <result property="proId" column="pro_id"></result>
+            <result property="proName" column="pro_name"></result>
+            <result property="price" column="price"></result>
+            <result property="quantity" column="quantity"></result>
+            <result property="img" column="img"></result>
+        </association>
+    </resultMap>
+
     <!--查询单个-->
     <select id="queryById" resultMap="OrdersMap">
         select
@@ -64,6 +86,23 @@
                 and status = #{status}
             </if>
         </where>
+    </select>
+    <!--根据用户id查询出该用户的所有订单-->
+    <select id="queryByUserId" resultMap="OrdersMap">
+        select order_id,user_id,user_name,user_tel,order_date,pay_date,address,total,status
+        from orders
+        where user_id=#{userId}
+    </select>
+    <!--查询所有的订单信息-->
+    <select id="queryAllOrd" resultMap="OrdersMap">
+        select order_id,user_id,user_name,user_tel,order_date,pay_date,address,total,status
+        from orders
+    </select>
+    <!--根据用户的订单状态不同，查询不同状态的订单信息-->
+    <select id="querySomeOrd" resultMap="OrdersMap">
+        select order_id,user_id,user_name,user_tel,order_date,pay_date,address,total,status
+        from orders
+        where user_id=#{userId} and status=#{status}
     </select>
 
     <!--新增所有列-->

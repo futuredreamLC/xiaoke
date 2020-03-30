@@ -47,98 +47,29 @@
     <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
 </head>
 <body>
-<div th:replace="bar::topbar"></div>
-<div class="container-fluid">
-    <div class="row">
-        <div th:replace="bar::sidebar"></div>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0">
-
-                    </div>
-                </div>
-                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:200%;height:200%;left:0; top:0">
-                    </div>
-                </div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">确认支付</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="row bg-light">
-                <h2 style="color: red;">全部商品 <span th:if="${session.carts.size()!=0}" th:text="${session.carts.size()}"></span></h2>
-                <div class="alert alert-success alert-dismissible fade show" th:if="${not #strings.isEmpty(msg)}" >
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong th:text="${msg}"></strong>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>商品图片</th>
-                            <th>商品名</th>
-                            <th>单价</th>
-                            <th>数量</th>
-                            <th>小计</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="c:${session.carts}">
-                            <td>
-                                <div>
-                                <input th:id="'check-'+${c.getCartId()}" type="checkbox" style="zoom: 200%;vertical-align:text-top; margin-top:25px;">
-                                </div>
-                            </td>
-                            <td>
-                                <img src="/img/41be264b-eba8-4198-953c-64d8a1c4fa0c.png" th:src="'/img/'+${c.getProduct().getProImage()}" style="width: 100px;height: 120px" />
-                            </td>
-                            <td>
-                                <div style="width: 200px" th:text="${c.getProduct().getProDescribe()}">这是一台以前的iPhone6</div>
-                            </td>
-                            <td>
-                                <div>￥<span th:id="'price-'+${c.getCartId()}" th:text="${c.getProduct().getPrice()}">300</span></div>
-                            </td>
-                            <td>
-                                <div class="input-group mb-4">
-                                    <div class="input-group-prepend">
-                                        <button class="btn btn-outline-secondary" type="button" th:id="'cut-'+${c.getCartId()}" id="cut">-</button>
-                                    </div>
-                                    <input type="text" th:id="'quantity-'+${c.getCartId()}"  th:value="${c.getQuantity()}" class="col-md-2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" th:id="'add-'+${c.getCartId()}" id="add">+</button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div style="font-weight: bold">￥<span th:id="'total-'+${c.getCartId()}" th:text="${c.getTotal()}">300</span></div>
-                            </td>
-                            <td>
-                                <button th:attr="del_uri=@{'/shoppingcart/delete/'+${c.getCartId()}}" class="btn btn-lg btn-danger deleteBtn" >删除</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="modal-body">
+                陈留涛大傻逼
             </div>
-            <div th:if="${session.carts.size()==0}">
-                <p>您还没有添加任何商品进入你的购物车，快去商城选你的心仪的宝贝吧！</p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
-        </main>
-        <div style="width: 97%;padding-left: 268px;height: 60px;display: inline" th:if="${session.carts.size()!=0}">
-            <div style="height: 60px;width: 20%;float: left"><input id="checkAll" style="zoom: 200%;" type="checkbox">全选</div>
-            <div style="height: 60px;width: 20%;float: left">已选中<span id="allQuantity" style="color: red;font-weight: bold" >0</span>件商品</div>
-            <div style="height: 60px;width: 20%;float: left"><a type="button" href="#">删除已选中的商品</a></div>
-            <div style="height: 60px;width: 20%;float: left;font-weight: bold">总价:￥<span th:id="allCost" style="color: red">0</span></div>
-            <div style="height: 60px;width: 20%;float: left"><button id="toPay" style="float: right" class="btn btn-lg btn-danger costBtn" >结算</button></div>
         </div>
-        <form>
-            <input type="hidden" name="orderInfo" id="orderInfo"/>
-        </form>
-        <form id="deleteCartId" method="post">
-            <input type="hidden" name="_method" value="post"/>
-        </form>
     </div>
 </div>
+
 <script src="/webjars/jquery/3.4.1/jquery.js"></script>
 <script src="/js/bootstrap-input-spinner.js"></script>
 <script>
@@ -149,122 +80,7 @@
 </script>
 <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.bundle.min.js"></script>
 <script th:inline="javascript">
-    //计算全部的方法
-    function getSumCost(){
-        let allCost = 0.0;
-        let allQuantity=0;
-        $("[id^=check-]").each(function () {
-            if (this.checked){//如果当前被选中
-                let id=this.id.split('-')[1];
-                let quantity=$("#quantity-"+id).val();
-                let price=parseFloat($("#price-"+id).text());
-                allCost += price * quantity;
-                allQuantity++;
-            }
-        });
-        $("#allQuantity").text(allQuantity);
-        $("#allCost").text(allCost.toFixed(1));
-        return allCost.toFixed(1);
-    }
 
-
-    $(function () {
-        //点击+按钮，改变对应的数值
-        $("[id^=add-]").click(function () {
-            let id=this.id.split('-')[1];
-            let quantity=$("#quantity-"+id).val();
-            let price=parseFloat($("#price-"+id).text());
-            let total=0.0;
-            quantity++;
-            total=quantity*price;
-            $("#total-"+id).text(total.toFixed(1));
-            $("#quantity-"+id).val(quantity);
-            getSumCost()
-        })
-
-        //点击-按钮，改变对应的数值
-        $("[id^=cut-]").click(function () {
-            let id=this.id.split('-')[1];
-            let price=parseFloat($("#price-"+id).text());
-            let total=0.0;
-            let quantity=$("#quantity-"+id).val();
-            if (quantity>1){
-                quantity--;
-            }
-            total=quantity*price;
-            $("#total-"+id).text(total.toFixed(1));
-            $("#quantity-"+id).val(quantity);
-            getSumCost()
-        })
-
-        //点击全选复选框，选择全部商品，并计算总价
-        $("#checkAll").click(function () {
-            let checked=this.checked;
-            $("[id^=check-]").each(function () {
-                this.checked = checked;
-            })
-            getSumCost();
-        })
-
-        //手动改变数量框中的数据，改变相应的值
-        $("[id^=quantity-]").change(function () {
-            let id=this.id.split('-')[1];
-            let quantity=$("#quantity-"+id).val();
-            let price=parseFloat($("#price-"+id).text());
-            let total=price*quantity;
-            $("#total-"+id).text(total.toFixed(1));
-            getSumCost();
-        })
-
-        //选中某件商品，并改变总价
-        $("[id^=check-]").click(function () {
-            let id=this.id.split('-')[1];
-            let quantity=parseFloat($("#allQuantity").text());
-            let allCost=parseFloat($("#allCost").text());
-            let total=parseFloat($("#total-"+id).text());
-            if (this.checked){
-                allCost = allCost + total;
-                quantity++;
-                $("#allQuantity").text(quantity);
-                $("#allCost").text(allCost.toFixed(1));
-            } else {
-                allCost = allCost-total;
-                quantity--;
-                $("#allQuantity").text(quantity);
-                $("#allCost").text(allCost.toFixed(1));
-            }
-        })
-
-        $("#toPay").click(function () {
-            let arr=[];
-            let cart={};
-            $("[id^=check-]").each(function () {//循环所有的复选框
-                let carts=[[${session.carts}]];
-                if (this.checked){//如果当前复选框被选中
-                    let id=this.id.split('-')[1];//获取改购物车id
-                    let quantity=$("#quantity-"+id).val();//获取该商品的数量
-                    let total=parseFloat($("#total-"+id).text());
-                    for (let i=0;i<carts.length;i++){//根据id反向去用户的购物车列表中找到相对于的商品
-                        let c=carts[i];
-                        if(id==c.cartId){
-                            cart=c;
-                            cart.quantity=quantity;
-                            cart.total=total;
-                        }
-                    }
-                    arr.push(cart);
-                }
-            });
-            console.log(arr);
-        })
-
-        $(".deleteBtn").click(function () {
-            $("#deleteCartId").attr("action", $(this).attr("del_uri")).submit();
-            return false;
-        });
-
-
-    })
 </script>
 </body>
 </html>
