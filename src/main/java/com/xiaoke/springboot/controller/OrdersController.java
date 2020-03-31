@@ -49,7 +49,7 @@ public class OrdersController {
      */
     @PostMapping("addOrders")
     public String addOrders(String ordersInfo,Double cost, Model model, Map<String,Object> map){
-        List<Shoppingcart> list= JSON.parseArray(ordersInfo,Shoppingcart.class);
+        List<Shoppingcart> list= JSON.parseArray(ordersInfo,Shoppingcart.class);//将前端返回的json字符串转义成shoppingcart对象
         if (list.size()!=0) {
             model.addAttribute("carts", list);
             model.addAttribute("cost",cost);

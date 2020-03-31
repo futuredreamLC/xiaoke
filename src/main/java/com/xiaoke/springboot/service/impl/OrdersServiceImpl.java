@@ -112,6 +112,7 @@ public class OrdersServiceImpl implements OrdersService {
     public Orders update(Orders orders,Integer operateId) {
         if (operateId==1){
             orders.setStatus("待发货");
+            orders.setPayDate(new Date());
         }
         if (operateId==2){
             orders.setStatus("待收货");
