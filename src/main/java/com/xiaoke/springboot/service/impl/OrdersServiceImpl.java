@@ -1,14 +1,14 @@
 package com.xiaoke.springboot.service.impl;
 
 import com.xiaoke.springboot.dao.OrdersInfoDao;
+import com.xiaoke.springboot.dao.ProductDao;
 import com.xiaoke.springboot.dao.ShoppingcartDao;
 import com.xiaoke.springboot.entity.Orders;
 import com.xiaoke.springboot.dao.OrdersDao;
 import com.xiaoke.springboot.entity.OrdersInfo;
+import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.entity.Shoppingcart;
-import com.xiaoke.springboot.service.OrdersInfoService;
 import com.xiaoke.springboot.service.OrdersService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,6 +37,9 @@ public class OrdersServiceImpl implements OrdersService {
     @Resource
     private ShoppingcartDao shoppingcartDao;
 
+    @Resource
+    private ProductDao productDao;
+
 
     /**
      * 通过ID查询单条数据
@@ -46,7 +49,12 @@ public class OrdersServiceImpl implements OrdersService {
      */
     @Override
     public Orders queryById(String orderId) {
-        return this.ordersDao.queryById(orderId);
+        Orders orders=ordersDao.queryById(orderId);
+        List<OrdersInfo> ordersInfos=ordersInfoDao.queryByOrdersId(orders.getOrderId());
+        Map<String,List<OrdersInfo>> collect=ordersInfos.stream().collect(Collectors.groupingBy(OrdersInfo::getOrderId));
+        List<OrdersInfo> list=collect.get(orders.getOrderId());
+        orders.setOrdersInfos(list);
+        return orders;
     }
 
     /**
@@ -110,6 +118,17 @@ public class OrdersServiceImpl implements OrdersService {
         }
         if (operateId==3){
             orders.setStatus("待评价");
+            List<OrdersInfo> infos=orders.getOrdersInfos();
+            Iterator<OrdersInfo> its=infos.iterator();
+            while (its.hasNext()){
+                OrdersInfo it=its.next();
+                Product product=productDao.queryById(it.getProId());
+                Integer sales=it.getQuantity()+product.getSales();
+                Integer stocks=product.getStocks()-it.getQuantity();
+                product.setSales(sales);
+                product.setStocks(stocks);
+                productDao.update(product);
+            }
         }
         this.ordersDao.update(orders);
         return this.queryById(orders.getOrderId());
@@ -195,6 +214,28 @@ public class OrdersServiceImpl implements OrdersService {
             it.setOrdersInfos(list);
         }
         return orders;
+    }
+
+    /**
+     * 通过订单中该商品的状态对该商品判断评论权限
+     * @param userId
+     * @param proId
+     * @return
+     */
+    @Override
+    public Boolean queryByUIdPId(Integer userId, Integer proId) {
+        String status="待评价";
+        Boolean comment=false;
+        List<Orders> orders=ordersDao.querySomeOrd(userId,status);//查询该用户下订单状态为 待支付 状态的订单
+        Iterator<Orders> its=orders.iterator();
+        while (its.hasNext()){
+            Orders it=its.next();
+            List<OrdersInfo> ordersInfos=ordersInfoDao.queryByOIdPId(it.getOrderId(),proId);
+            if (ordersInfos.size()!=0){
+                comment=true;
+            }
+        }
+        return comment;
     }
 
 

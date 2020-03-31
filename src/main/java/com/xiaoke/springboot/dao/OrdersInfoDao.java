@@ -68,4 +68,12 @@ public interface OrdersInfoDao {
      * @return
      */
     List<OrdersInfo> queryByOrdersId(String ordersId);
+
+    /**
+     * 用来查找订单中是否有该商品并给用户评论商品的权限
+     * @param orderId
+     * @param proId
+     * @return
+     */
+    List<OrdersInfo> queryByOIdPId(@Param("ordersId") String ordersId, @Param("porId") Integer proId);
 }

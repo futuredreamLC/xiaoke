@@ -6,6 +6,7 @@ import com.xiaoke.springboot.service.CommentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,6 +51,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public Comment insert(Comment comment) {
+        comment.setCommentTime(new Date());
         this.commentDao.insert(comment);
         return comment;
     }

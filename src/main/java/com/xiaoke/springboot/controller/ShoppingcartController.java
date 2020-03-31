@@ -2,11 +2,13 @@ package com.xiaoke.springboot.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.xiaoke.springboot.dao.ProductDao;
 import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.entity.Shoppingcart;
 import com.xiaoke.springboot.entity.User;
 import com.xiaoke.springboot.service.ShoppingcartService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +31,9 @@ public class ShoppingcartController {
      */
     @Resource
     private ShoppingcartService shoppingcartService;
+
+    @Resource
+    private ProductDao productDao;
 
     /**
      * 通过主键查询单条数据
@@ -71,6 +76,33 @@ public class ShoppingcartController {
         if (user != null) {
             Shoppingcart shoppingcart1 = shoppingcartService.queryByProId(product.getProId(),user.getUserId());
             shoppingcartService.insert(shoppingcart);
+            if (shoppingcart1==null) {
+                map.put("msg","该商品已加入您的购物车，请回购物车查看");
+                return "index";
+            }else {
+                map.put("msg","您的购物车中已有该商品，已对数量进行叠加，请前往购物车查看");
+                return "index";
+            }
+        } else {
+            map.put("msg", "商品添加失败，请先登录");
+            return "index";
+        }
+    }
+
+    /**
+     * 首页快捷加入
+     * @param proId
+     * @param session
+     * @param map
+     * @return
+     */
+    @GetMapping("addOne/{proId}")
+    public String addOne(@PathVariable("proId") Integer proId,HttpSession session, Map<String,Object> map){
+        User user = (User) session.getAttribute("Login");
+        if (user != null) {
+            Product product=productDao.queryById(proId);
+            Shoppingcart shoppingcart1 = shoppingcartService.queryByProId(proId,user.getUserId());
+            shoppingcartService.insertone(product);
             if (shoppingcart1==null) {
                 map.put("msg","该商品已加入您的购物车，请回购物车查看");
                 return "index";

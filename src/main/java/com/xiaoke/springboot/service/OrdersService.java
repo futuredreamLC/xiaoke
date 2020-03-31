@@ -76,4 +76,12 @@ public interface OrdersService {
      * @return
      */
     List<Orders> querySomeOrd(Integer userId, Integer operateId);
+
+    /**
+     * 对商品评论进行权限判定
+     * @param userId
+     * @param proId
+     * @return
+     */
+    Boolean queryByUIdPId(Integer userId, Integer proId);
 }

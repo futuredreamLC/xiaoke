@@ -80,7 +80,7 @@
                     <td>
                         <div style="overflow: auto;width: 400px;height: 100px">
                             <div style="display:inline-block" th:each="ordInfo:${ord.getOrdersInfos()}">
-                                <div style="float: left;width: 80px"><span th:text="${ordInfo.getProName()}"></span>
+                                <div style="float: left;width: 80px"><a th:href="@{'/goods/details/'+${ordInfo.getProId()}}" th:text="${ordInfo.getProName()}"></a>
                                 </div>
                                 <div style="float: left;width: 100px">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp￥<span style="font-weight: bold;color: red;width: 100px" th:text="${ordInfo.getPrice()}"></span>
                                 </div>
@@ -96,8 +96,8 @@
                     <td>
                         <button th:if="${ord.getStatus()=='待支付'}" th:id="'payBtn-'+${ord.getOrderId()}" class="btn btn-sm btn-primary" th:text="${ord.getStatus()}"></button>
                         <span th:if="${ord.getStatus()=='待发货'}" th:text="${ord.getStatus()}"></span>
+                        <span th:if="${ord.getStatus()=='待评价'}" th:text="${ord.getStatus()}"></span>
                         <button th:if="${ord.getStatus()=='待收货'}" th:id="'recBtn-'+${ord.getOrderId()}" class="btn btn-sm btn-success " th:text="${ord.getStatus()}"></button>
-                        <button th:if="${ord.getStatus()=='待评价'}" th:id="'commentBtn-'+${ord.getOrderId()}" class="btn btn-sm btn-info " th:text="${ord.getStatus()}">
                     </td>
                 </tr>
                 </tbody>
@@ -129,6 +129,8 @@
                 </div>
             </div>
         </div>
+        <div id="commentmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        </div>
     </div>
 </div>
 <script src="/webjars/jquery/3.4.1/jquery.js"></script>
@@ -140,8 +142,8 @@
 </script>
 <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.bundle.min.js"></script>
 <script th:inline="javascript">
-    $("[id^=payBtn-]").click(function () {
-        let id=this.id.split('-')[1];
+    $("[id^=payBtn-]").click(function () {//判断是那个订单的操作按钮的点击事件
+        let id=this.id.split('-')[1];//获取被点击的操作按钮所对应的订单id
         let cost=parseFloat($("#cost-"+id).text());
         $("#text").text("总价："+cost.toFixed(1)+"￥");
         $("#title").text("确认支付");

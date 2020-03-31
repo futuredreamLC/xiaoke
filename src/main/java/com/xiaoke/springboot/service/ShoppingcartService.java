@@ -1,5 +1,6 @@
 package com.xiaoke.springboot.service;
 
+import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.entity.Shoppingcart;
 
 import javax.servlet.http.HttpSession;
@@ -67,4 +68,6 @@ public interface ShoppingcartService {
      * @return
      */
     Shoppingcart queryByProId(Integer proId,Integer userId);
+
+    Shoppingcart insertone(Product product);
 }

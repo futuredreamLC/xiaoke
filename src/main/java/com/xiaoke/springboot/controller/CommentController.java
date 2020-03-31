@@ -34,4 +34,10 @@ public class CommentController {
         return this.commentService.queryById(id);
     }
 
+    @PostMapping("add")
+    public String add(Comment comment){
+        commentService.insert(comment);
+        return "gooddetails";
+    }
+
 }

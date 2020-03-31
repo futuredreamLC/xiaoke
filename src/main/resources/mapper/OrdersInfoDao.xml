@@ -57,10 +57,17 @@
             </if>
         </where>
     </select>
+    <!--通过订单id查询该订单的详情信息-->
     <select id="queryByOrdersId" resultMap="OrdersInfoMap">
         select order_info_id,order_id,pro_id,price,quantity,img,pro_name
         from orders_info
         where order_id=#{ordersId}
+    </select>
+    <!--通过订单id和商品id查询该用户是否具有评论该商品的资格-->
+    <select id="queryByOIdPId" resultMap="OrdersInfoMap">
+        select order_info_id,order_id,pro_id,price,quantity,img,pro_name
+        from orders_info
+        where order_id=#{ordersId} and pro_id=#{porId}
     </select>
 
     <!--新增所有列-->

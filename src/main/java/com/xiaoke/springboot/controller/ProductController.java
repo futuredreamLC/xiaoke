@@ -3,8 +3,11 @@ package com.xiaoke.springboot.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaoke.springboot.entity.Comment;
+import com.xiaoke.springboot.entity.Orders;
 import com.xiaoke.springboot.entity.Product;
+import com.xiaoke.springboot.entity.User;
 import com.xiaoke.springboot.service.CommentService;
+import com.xiaoke.springboot.service.OrdersService;
 import com.xiaoke.springboot.service.ProductService;
 import com.xiaoke.springboot.service.TypeService;
 import org.springframework.stereotype.Controller;
@@ -36,6 +39,9 @@ public class ProductController {
     @Resource
     private CommentService commentService;
 
+    @Resource
+    private OrdersService ordersService;
+
     /**
      * 通过proId查询商品详情，并查询出该商品的所有评论
      *
@@ -45,6 +51,12 @@ public class ProductController {
     public String details(@PathVariable("ProId") Integer ProId, HttpSession session) {
         List<Comment> comments = commentService.queryByProId(ProId);
         Product product = productService.queryById(ProId);
+        User user=(User) session.getAttribute("Login");
+        if (user!=null){
+            Boolean can;
+            can=ordersService.queryByUIdPId(user.getUserId(),ProId);
+            session.setAttribute("can",can);
+        }
         session.setAttribute("product", product);
         session.setAttribute("comments", comments);
         return "gooddetails";

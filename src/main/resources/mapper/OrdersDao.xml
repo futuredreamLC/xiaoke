@@ -104,7 +104,6 @@
         from orders
         where user_id=#{userId} and status=#{status}
     </select>
-
     <!--新增所有列-->
     <insert id="insert" keyProperty="orderId">
         insert into xiaoke.orders(order_id,user_id, user_name, user_tel, order_date, pay_date, address, total, status)

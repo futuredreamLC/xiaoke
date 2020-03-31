@@ -130,4 +130,37 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
     public Shoppingcart queryByProId(Integer proId,Integer userId) {
         return this.shoppingcartDao.queryByProId(proId,userId);
     }
+
+    /**
+     * 加入一件商品进入购物车
+     * @param product
+     * @return
+     */
+    @Override
+    public Shoppingcart insertone(Product product) {
+        User user = (User) session.getAttribute("Login");
+        Shoppingcart shoppingcart=new Shoppingcart();
+        Shoppingcart shoppingcart1 = shoppingcartService.queryByProId(product.getProId(),user.getUserId());
+        if (shoppingcart1 == null) {
+            Integer uid = user.getUserId();
+            Integer proId=product.getProId();
+            Integer quantity=1;
+            Double total = product.getPrice();
+            shoppingcart.setProId(proId);
+            shoppingcart.setQuantity(quantity);
+            shoppingcart.setUserId(uid);
+            shoppingcart.setTotal(total);
+            this.shoppingcartDao.insert(shoppingcart);
+            return shoppingcart;
+        } else {
+            Integer newQuantity = shoppingcart1.getQuantity() + 1;
+            Integer cartId = shoppingcart1.getCartId();
+            Double newTotal = product.getPrice() * newQuantity;
+            shoppingcart.setQuantity(newQuantity);
+            shoppingcart.setTotal(newTotal);
+            shoppingcart.setCartId(cartId);
+            this.shoppingcartDao.update(shoppingcart);
+            return shoppingcart;
+        }
+    }
 }
