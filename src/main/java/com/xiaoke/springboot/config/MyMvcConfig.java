@@ -13,6 +13,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
     //浏览器发送/****请求，来到*****页面
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/user/login").setViewName("login");
+        registry.addViewController("/bar").setViewName("bar");
         registry.addViewController("/user/register").setViewName("register");
         registry.addViewController("/test").setViewName("test");
         registry.addViewController("/type/add").setViewName("typeadd");

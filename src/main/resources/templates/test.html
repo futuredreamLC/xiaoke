@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>购物车</title>
-
+    <meta charset="UTF-8" >
     <link
             href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
             th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}"
             rel="stylesheet"
     />
     <style>
-        .container {
-            width: auto;
-            max-width: 680px;
-            padding: 0 15px;
+        .main-sidebar{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            min-height: 100%;
+            width: 230px;
+            z-index: 810;
+            background-color: #222d32;
         }
-
-        .footer {
-            background-color: #f5f5f5;
-        }
-
-        code {
-            font-size: 80%;
+        .container{
+            width: 870px;
+            height: 622px;
+            overflow-x: hidden;
+            overflow-y: scroll;
         }
         body {
             padding-top: 5rem;
@@ -45,33 +47,28 @@
         }
     </style>
     <link href="dashboard.css" th:href="@{/css/index.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="dashboard.css" th:href="@{/css/htmleaf-demo.css}" rel="stylesheet">
+    <link href="dashboard.css" th:href="@{dist/sidebar-menu.css}" rel="stylesheet">
+
 </head>
 <body>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-</button>
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">确认支付</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                陈留涛大傻逼
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+<aside class="main-sidebar">
+    <section  class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="header">MAIN NAVIGATION</li>
+            <li class="treeview" th:each="t:${session.types}">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>[[${t.typename}]]</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu" th:each="ct:${t.childrenTypes}">
+                    <li><a href="#"><i class="fa fa-circle-o"></i> [[${ct.typename}]]</a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</aside>
 <script src="/webjars/jquery/3.4.1/jquery.js"></script>
-<script src="/js/bootstrap-input-spinner.js"></script>
 <script>
     window.jQuery ||
     document.write(
@@ -79,8 +76,9 @@
     );
 </script>
 <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.bundle.min.js"></script>
-<script th:inline="javascript">
-
+<script src="/dist/sidebar-menu.js"></script>
+<script>
+    $.sidebarMenu($('.sidebar-menu'));
 </script>
 </body>
 </html>

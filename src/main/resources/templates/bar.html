@@ -178,7 +178,7 @@
             </nav>
         </ul>
 
-        <ul class="nav flex-column">
+        <ul class="nav flex-column" th:if="(${session.Login!=null} and ${session.Login.getPosition()==1})" >
             <li class="nav-item">
                 <a class="nav-link ">
                     <svg
