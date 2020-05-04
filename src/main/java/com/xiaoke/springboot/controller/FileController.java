@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,12 +26,16 @@ public class FileController {
             String oldFileName = myfile.getOriginalFilename(); // 获取上传文件的原名
             // 存储图片的虚拟本地路径（这里需要配置tomcat的web模块路径，双击猫进行配置）
             String saveFilePath = ClassUtils.getDefaultClassLoader().getResource("static/img").getPath();
+//            String saveFilePath =this.getClass().getResource("/static/img").getPath();
+//            String saveFilePath=System.getProperty("user.dir");
+            System.out.println(saveFilePath);
             // 上传图片
             if (myfile != null && oldFileName != null && oldFileName.length() > 0) {
                 // 新的图片名称
                 String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
                 // 新图片
                 File newFile = new File( saveFilePath+ File.separator + newFileName);
+                System.out.println(newFile);
                 // 将内存中的数据写入磁盘
                 myfile.transferTo(newFile);
                 // 将新图片名称返回到前端

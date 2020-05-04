@@ -142,7 +142,7 @@
 </nav>
 <nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="sidebar">
     <div class="sidebar-sticky">
-        <ul class="nav flex-column">
+        <ul class="nav flex-column" th:if="(${session.Login==null} or ${session.Login.getPosition()=='shoper'})">
             <li class="nav-item">
                 <a class="nav-link active" th:href="@{/}">
                     <svg
@@ -178,7 +178,7 @@
             </nav>
         </ul>
 
-        <ul class="nav flex-column" th:if="(${session.Login!=null} and ${session.Login.getPosition()==1})" >
+        <ul class="nav flex-column" th:if="(${session.Login!=null} and ${session.Login.getPosition()=='root'})" >
             <li class="nav-item">
                 <a class="nav-link ">
                     <svg

@@ -2,6 +2,11 @@ package com.xiaoke.springboot.controller;
 
 import com.xiaoke.springboot.entity.User;
 import com.xiaoke.springboot.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +44,7 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.setAttribute("Login",null);
-        return "index";
+        return "redirect:/index.html";
     }
     @GetMapping("/register")
     public String register(){
@@ -50,15 +55,41 @@ public class UserController {
                         @RequestParam("password") String password,
                         Map<String,Object> map,
                         HttpSession session){
-        User user=userService.queryByName(username);
-        if(user!=null && user.getPassword().equals(password)){
+        //获取Subject
+        Subject subject = SecurityUtils.getSubject();
+
+        //封装数据
+        UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+
+        //执行登录方法
+        try {
+            subject.login(token);
+            User user=(User)subject.getPrincipal();
             session.setAttribute("Login",user);
-            return "redirect:/index.html";
-        }
-        else {
-            map.put("msg","用户名密码错误！");
+            if (user.getPosition().equals("shoper")){
+                return "redirect:/index.html";
+            }else {
+                return "goodslist";
+            }
+
+        }catch (UnknownAccountException e){
+            map.put("msg","用户名不存在！");
             return "login";
         }
+        catch (IncorrectCredentialsException e){
+            map.put("msg","用户密码错误！");
+            return "login";
+        }
+
+//        User user=userService.queryByName(username);
+//        if(user!=null && user.getPassword().equals(password)){
+//            session.setAttribute("Login",user);
+//            return "redirect:/index.html";
+//        }
+//        else {
+//            map.put("msg","用户名密码错误！");
+//            return "login";
+//        }
     }
     @PostMapping("/register")
     public String register(User user,

@@ -25,7 +25,7 @@ public class User implements Serializable {
     
     private String tel;
     
-    private Integer position;
+    private String position;
 
 
     public Integer getUserId() {
@@ -84,11 +84,11 @@ public class User implements Serializable {
         this.tel = tel;
     }
 
-    public Integer getPosition() {
+    public String getPosition() {
         return position;
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 

@@ -10,7 +10,7 @@
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="tel" column="tel" jdbcType="VARCHAR"/>
-        <result property="position" column="position" jdbcType="INTEGER"/>
+        <result property="position" column="position" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
