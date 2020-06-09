@@ -8,10 +8,12 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -37,47 +39,48 @@ public class UserController {
      * @return 单条数据
      */
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
-        session.setAttribute("Login",null);
+    public String logout(HttpSession session) {
+        session.setAttribute("Login", null);
         return "redirect:/index.html";
     }
+
     @GetMapping("/register")
-    public String register(){
+    public String register() {
         return "register";
     }
+
     @PostMapping("/login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        Map<String,Object> map,
-                        HttpSession session){
+                        Map<String, Object> map,
+                        HttpSession session) {
         //获取Subject
         Subject subject = SecurityUtils.getSubject();
 
         //封装数据
-        UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
         //执行登录方法
         try {
             subject.login(token);
-            User user=(User)subject.getPrincipal();
-            session.setAttribute("Login",user);
-            if (user.getPosition().equals("shoper")){
+            User user = (User) subject.getPrincipal();
+            session.setAttribute("Login", user);
+            if (user.getPosition().equals("root")) {
+                return "redirect:/goods/list";
+            } else {
                 return "redirect:/index.html";
-            }else {
-                return "goodslist";
             }
 
-        }catch (UnknownAccountException e){
-            map.put("msg","用户名不存在！");
+        } catch (UnknownAccountException e) {
+            map.put("msg", "用户名不存在！");
             return "login";
-        }
-        catch (IncorrectCredentialsException e){
-            map.put("msg","用户密码错误！");
+        } catch (IncorrectCredentialsException e) {
+            map.put("msg", "用户密码错误！");
             return "login";
         }
 
@@ -91,20 +94,21 @@ public class UserController {
 //            return "login";
 //        }
     }
+
     @PostMapping("/register")
     public String register(User user,
-                           Map<String,Object> map){
-        User user1=userService.queryByName(user.getUserName());
-        if(user1==null)
-        {
+                           Map<String, Object> map) {
+        User user1 = userService.queryByName(user.getUserName());
+        if (user1 == null) {
             userService.insert(user);
-        map.put("msg","注册成功，请登录!");
-        return "login";
-        }else{
-            map.put("msg","该用户名已被注册！");
+            map.put("msg", "注册成功，请登录!");
+            return "login";
+        } else {
+            map.put("msg", "该用户名已被注册！");
             return "register";
         }
     }
+
     @GetMapping("selectOne")
     public User selectOne(Integer id) {
         return this.userService.queryById(id);

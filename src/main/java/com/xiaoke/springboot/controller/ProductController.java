@@ -2,14 +2,13 @@ package com.xiaoke.springboot.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.page.PageMethod;
 import com.xiaoke.springboot.entity.Comment;
-import com.xiaoke.springboot.entity.Orders;
 import com.xiaoke.springboot.entity.Product;
 import com.xiaoke.springboot.entity.User;
 import com.xiaoke.springboot.service.CommentService;
 import com.xiaoke.springboot.service.OrdersService;
 import com.xiaoke.springboot.service.ProductService;
-import com.xiaoke.springboot.service.TypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -106,7 +105,7 @@ public class ProductController {
      */
     @GetMapping("list")
     public String tolist(@RequestParam(defaultValue = "1") Integer pageNum, HttpSession session) {
-        PageHelper.startPage(pageNum, 12);
+        PageMethod.startPage(pageNum, 12);
         PageInfo pageInfo = new PageInfo(productService.queryAllPro());
         session.setAttribute("pageInfo", pageInfo);
         return "goodslist";
